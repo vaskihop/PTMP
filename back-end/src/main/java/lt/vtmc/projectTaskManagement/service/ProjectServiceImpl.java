@@ -25,7 +25,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public void addProject(Project project) {		
-		repo.save(new ProjectEntity(project.getProjectTitle(), project.getProjectDescription(), false, project.getGeneralTaskQuantity(), project.getInProgressTaskQuantity()));
+		repo.save(new ProjectEntity(project.getProjectTitle(), project.getProjectDescription(), project.getProjectState(), project.getGeneralTaskQuantity(), project.getInProgressTaskQuantity()));
 
 	}
 
@@ -46,6 +46,7 @@ public class ProjectServiceImpl implements ProjectService {
 		ProjectEntity updatedProject=findProjecttById(projectId);
 		updatedProject.setProjectTitle(project.getProjectTitle());
 		updatedProject.setProjectDescription(project.getProjectDescription());
+		updatedProject.setProjectState(project.getProjectState());
 		updatedProject.setGeneralTaskQuantity(project.getGeneralTaskQuantity());
 		updatedProject.setInProgressTaskQuantity(project.getInProgressTaskQuantity());
 
