@@ -9,7 +9,7 @@ class ProjectComponent extends Component {
             id: this.props.match.params.id,
             projectTitle: '',
              projectDescription: '',
-            //  projectState: '',
+             projectState: false,
              generalTaskQuantity: '',
              inProgressTaskQuantity: ''
         }
