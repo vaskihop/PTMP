@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import AxiosFunctions from '../service/AxiosFunctions';
 
+
 class ListProjectsComponent extends Component {
     constructor(props) {
         super(props)
@@ -34,7 +35,11 @@ class ListProjectsComponent extends Component {
 
     }
 
+    showProjectItems=(id)=>{
+      
+     this.props.history.push(`/project/${id}`) 
 
+    }
   
 
 
@@ -72,13 +77,13 @@ class ListProjectsComponent extends Component {
                                 <th>Delete</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody >
                             {
                                 this.state.projects.map(
                                    project =>
                                         
                                         <tr key={project.id}>
-                                            <td>{project.projectTitle}</td>
+                                             <td onClick={() => this.showProjectItems(project.id)}>{project.projectTitle}</td> 
                                             <td>{project.projectDescription}</td>
                                             <td>{project.projectState ? 'Done':'Not Done'}</td> 
                                             <td>{project.generalTaskQuantity}</td>

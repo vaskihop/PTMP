@@ -10,8 +10,8 @@ class ProjectComponent extends Component {
             projectTitle: '',
              projectDescription: '',
              projectState: false,
-             generalTaskQuantity: '',
-             inProgressTaskQuantity: ''
+             generalTaskQuantity: 0,
+             inProgressTaskQuantity: 0
         }
     }
 
@@ -121,32 +121,18 @@ class ProjectComponent extends Component {
                                         <label>Description</label>
                                         <Field className="form-control" type="text" name="projectDescription" />
                                     </fieldset>
-                                    {/* <fieldset className="form-group">
+
+
+
+                                    <fieldset className="form-group">
                                         <label>Project State</label>
-                                        <Field as="select" name="projectState">
+                                        <Field className="btn btn-secondary d-block" as="select" name="projectState">
                                             <option value='true'>Done</option>
                                             <option value='false'>Not Done</option>
                                         </Field>
-                                    </fieldset> */}
-{/* 
-<div className="dropdown">
-  <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Dropdown button
-  </button>
-  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a className="dropdown-item" href="#">Action</a>
-    <a className="dropdown-item" href="#">Another action</a>
-    <a className="dropdown-item" href="#">Something else here</a>
-  </div>
-</div> */}
-                                         <fieldset className="dropdown form-group">
-                                        <label>Project State</label>
-                                        <br/>
-                                        <Field className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" as="select" name="projectState">
-                                            <option value='true'>Done</option>
-                                            <option value='false'>Not Done</option>
-                                        </Field>
-                                    </fieldset> 
+                                    </fieldset>
+
+                                    
                                     
 
 
