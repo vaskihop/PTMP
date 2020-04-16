@@ -17,7 +17,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lt.vtmc.projectTaskManagement.model.Project;
 import lt.vtmc.projectTaskManagement.model.ProjectEntity;
+import lt.vtmc.projectTaskManagement.model.Task;
+import lt.vtmc.projectTaskManagement.model.TaskEntity;
 import lt.vtmc.projectTaskManagement.service.ProjectService;
+import lt.vtmc.projectTaskManagement.service.TaskService;
 
 @RestController
 @CrossOrigin(origins="http://localhost:3000")
@@ -28,6 +31,9 @@ public class ProjectTaskController {
 	@Autowired
 	ProjectService projectService;
 	
+	@Autowired
+	TaskService taskService;
+	
 	@GetMapping
 	@ApiOperation(value="Get projects", notes="Returns registered projects")
 	public List<ProjectEntity> getProjects(){
@@ -35,7 +41,7 @@ public class ProjectTaskController {
 	}
 	
 	@GetMapping("/{projectId}")
-	@ApiOperation(value="Get project by id", notes="Returns registered project by project id")
+	@ApiOperation(value="Get project by id", notes="Returns registered project by project's id")
 	public ProjectEntity getProjectById(@PathVariable Long projectId) {
 		return projectService.findProjecttById(projectId);
 	}
@@ -47,15 +53,46 @@ public class ProjectTaskController {
 	}
 	
 	@DeleteMapping("/{projectId}")
-	@ApiOperation(value="Delete user by id", notes="Deletes project by project id")
+	@ApiOperation(value="Delete project by id", notes="Deletes project by project's id")
 	public void deleteProject(@PathVariable Long projectId) {
 		projectService.deleteProject(projectId);
 	}
 	
 	@PutMapping("/{projectId}")
-	@ApiOperation(value="Update project by id", notes="Updates project by project id")
+	@ApiOperation(value="Update project by id", notes="Updates project by project's id")
 	public void updateProject(@PathVariable Long projectId, @RequestBody Project project) {
-		projectService.updateArtist(projectId, project);
+		projectService.updateProject(projectId, project);
+	}
+	
+	//--------->tasks<--------
+	
+	@GetMapping("{projectId}/tasks")
+	@ApiOperation(value="Get tasks", notes="Returns registered tasks")
+	public List<TaskEntity> getTask(@PathVariable Long projectId){
+		return taskService.getTasks(projectId);
+	}
+	
+	@GetMapping("/{projectId}/tasks/{taskId}")
+	@ApiOperation(value="Get task by id", notes="Returns registered task by task's id")
+	public TaskEntity getTaskById(@PathVariable Long taskId) {
+		return taskService.findTaskById(taskId);
+	}
+	
+	@PostMapping("/{projectId}/tasks")
+	@ApiOperation(value="Create task", notes="Creates task")
+	public void addTask(@RequestBody Task task, @PathVariable Long projectId) {
+		taskService.addTask(task, projectId);
+	}
+	@DeleteMapping("/{projectId}/tasks/{taskId}")
+	@ApiOperation(value="Delete task by id", notes="Deletes task by task's id")
+	public void deleteTask(@PathVariable Long taskId) {
+		taskService.deleteTask(taskId);
+	}
+	
+	@PutMapping("/{projectId}/tasks/{taskId}")
+	@ApiOperation(value="Update task by id", notes="Updates task by task's id")
+	public void updateTask(@PathVariable Long taskId, @RequestBody Task task) {
+		taskService.updateTask(taskId, task);
 	}
 
 }

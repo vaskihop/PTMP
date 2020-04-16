@@ -15,6 +15,6 @@ public interface ProjectService {
 	
 	public ProjectEntity findProjecttById(Long projectId);
 	
-	void updateArtist(Long projectId, Project project);
+	void updateProject(Long projectId, Project project);
 
 }
