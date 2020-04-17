@@ -26,9 +26,7 @@ public class TaskServiceImpl implements TaskService {
 
 	@Override
 	public List<TaskEntity> getTasks(Long projectId) {
-		List<TaskEntity> taskList=new ArrayList<TaskEntity>();
-		taskRepo.findAll().forEach(taskList::add);
-		return taskList.stream().filter(task->task.getProject().getId().equals(projectId)).collect(Collectors.toList());
+		return projectRepo.findById(projectId).orElse(null).getTaskList();
 	}
 
 	@Override
