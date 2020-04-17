@@ -29,34 +29,25 @@ public class ProjectEntity {
 	private Long id;
 	private String projectTitle;
 	private String projectDescription;
-	private boolean projectState; //true-uzbaigtas; 
-	private int generalTaskNumber;
-	private int unfinishedTaskNumber;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
 	@JsonIgnoreProperties("project")
 	private List<TaskEntity> taskList=new ArrayList<TaskEntity>();
-	
+
 	public ProjectEntity(String projectTitle, String projectDescription) {
-//		galbut reiketu netraukti state i konstruktoriu, o automatiskai ji daryt false
+
 		this.projectTitle = projectTitle;
 		this.projectDescription = projectDescription;
 	}
 	
-	public void setGeneralTaskNumber() {
-		this.generalTaskNumber=taskList.size();
+	public ProjectEntity(Project project) {
+		this.projectTitle = project.getProjectTitle();
+		this.projectDescription = project.getProjectDescription();
 	}
 	
-	public void setUnfinishedTaskNumber() {
-		this.unfinishedTaskNumber=(int)taskList.stream().filter(task->!(task.getTaskState().equals(State.DONE))).count();
-	}
-	
-	public void setProjectState() {
-		if(unfinishedTaskNumber==0) {
-			projectState=true;
-		}else {
-			projectState=false;
-		}
+	public void updateProject(Project project) {
+		this.projectTitle = project.getProjectTitle();
+		this.projectDescription = project.getProjectDescription();
 	}
 
 }

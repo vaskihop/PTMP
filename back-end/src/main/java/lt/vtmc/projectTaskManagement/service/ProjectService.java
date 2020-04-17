@@ -7,13 +7,13 @@ import lt.vtmc.projectTaskManagement.model.Project;
 import lt.vtmc.projectTaskManagement.model.ProjectEntity;
 
 public interface ProjectService {
-	List<ProjectEntity> getProjects();
+	List<Project> getProjects();
 	
 	void addProject(Project project);
 	
 	void deleteProject(Long projectId);
 	
-	public ProjectEntity findProjecttById(Long projectId);
+	public Project findProjecttById(Long projectId);
 	
 	void updateProject(Long projectId, Project project);
 
