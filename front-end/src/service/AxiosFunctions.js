@@ -20,7 +20,36 @@ class AxiosFunctions {
 
     addProject(project) {
       return axios.post(`http://localhost:8080/api/projects/`,project);
+
     }
+
+    //????????????????????????????????????????????????????????????????????
+
+   getTask(id){
+       return axios.get(`http://localhost:8080/api/projects/${id}/tasks/`);
+     }
+
+
+    addTask(task,id){
+        return axios.post(`http://localhost:8080/api/projects/${id}/tasks`,task);
+    }
+
+     deleteTask(taskId){
+         return axios.delete(`http://localhost:8080/api/projects/tasks/${taskId}`);
+     }
+
+
+    getTaskById(taskId){
+        return axios.get(`http://localhost:8080/api/projects/tasks/${taskId}`);
+    }
+   
+
+    updateTaskById (taskId,task){
+        return axios.put(`http://localhost:8080/api/projects/tasks/${taskId}`,task);
+
+
+
+}
 }
 
 export default new AxiosFunctions();

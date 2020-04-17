@@ -37,8 +37,8 @@ class ListProjectsComponent extends Component {
 
     showProjectItems=(id)=>{
       
-     this.props.history.push(`/project/${id}`) 
-
+     //this.props.history.push(`/tasks/${id}`) 
+     this.props.history.push(`/tasks/${id}/tasks`)
     }
   
 
@@ -86,8 +86,8 @@ class ListProjectsComponent extends Component {
                                              <td onClick={() => this.showProjectItems(project.id)}>{project.projectTitle}</td> 
                                             <td>{project.projectDescription}</td>
                                             <td>{project.projectState ? 'Done':'Not Done'}</td> 
-                                            <td>{project.generalTaskQuantity}</td>
-                                            <td>{project.inProgressTaskQuantity}</td>
+                                            <td>{project.generalTaskNumber}</td>
+                                            <td>{project.unfinishedTaskNumber}</td>
                                             <td><button className="btn btn-dark" onClick={() => this.updateProjectClicked(project.id)}>Update</button></td>
                                             <td><button className="btn btn-dark" onClick={() => this.deleteProjectClicked(project.id)}>Delete</button></td>
                                         </tr>

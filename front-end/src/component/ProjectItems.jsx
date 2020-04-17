@@ -1,26 +1,32 @@
 import React, { Component } from 'react'
- import AxiosFunctions from '../service/AxiosFunctions';
+import AxiosFunctions from '../service/AxiosFunctions';
+
 
 class ProjectItems extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            tasks: [],
-            message:null
+            taskList: [],
+            message:null,
+            projectId : this.props.match.params.id
         }
+
     }
 
     componentDidMount() {
-        this.refreshTasks();
+        this.refreshTasks(this.state.projectId);
     }
-
-    refreshTasks=()=> {
-        AxiosFunctions.retrieveAllProjects()
+   
+    refreshTasks=(id)=> {
+        AxiosFunctions.getTask(id)
             .then(
                 response => {
-                    this.setState({ tasks: response.data })
+                    this.setState({ taskList: response.data })
+                   console.log( response.data )
                 }
+              
             )
+
     }
 
     deleteListClicked= (id)=> {
@@ -34,16 +40,26 @@ class ProjectItems extends Component {
 
     }
 
-    
+    // taskPriorityLevel(){
+    //     if(task.taskPriority=="HIGH"){
+
+    //     }
+
+    //     HIGH
+    // }
+
+    // taskStateLevel(){
+    //     TODO
+    // }
   
 
 
     addTasksClicked=()=> {
-        this.props.history.push(`new-list`)
+       // this.props.history.push(`/tasks/new-list`)
     }
 
     updateListClicked=(id)=> {
-        this.props.history.push(`update-list/${id}`)
+       // this.props.history.push(`/tasks/${id}`)
     }
 
     render() {
@@ -76,15 +92,16 @@ class ProjectItems extends Component {
                         </thead>
                         <tbody>
                             {
-                                this.state.tasks.map(
+                                this.state.taskList.map(
                                     task =>
                                         
-                                        <tr key={task.taskId}>
-                                            <td>{task.taskName}</td>
+                                        <tr key={task.id}>
+                                            <td>{task.id}</td>
+                                            <td>{task.taskTitle}</td>
                                             <td>{task.taskDescription}</td>
-                                            <td>{task.taskPriority ? 'Hight':'Medium'}</td> 
-                                            <td>{task.taskState ? 'Not Done':'In progress'}</td> 
-                                            <td>{task.date}</td>
+                                            <td>{task.taskPriority}</td>  
+                                            <td>{task.taskState}</td> 
+                                            
                                             <td><button className="btn btn-dark" onClick={() => this.updateListClicked(task.id)}>Update List</button></td>
                                             <td><button className="btn btn-dark" onClick={() => this.deleteListClicked(task.id)}>Delete List</button></td>
                                         </tr>

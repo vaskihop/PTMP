@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import AxiosFunctions from '../service/AxiosFunctions';
 
 class ProjectItemsUpdate extends Component {

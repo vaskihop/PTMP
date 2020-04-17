@@ -10,8 +10,8 @@ class ProjectComponent extends Component {
             projectTitle: '',
              projectDescription: '',
              projectState: false,
-             generalTaskQuantity: 0,
-             inProgressTaskQuantity: 0
+             generalTaskNumber: 0,
+             unfinishedTaskNumber: 0
         }
     }
 
@@ -26,8 +26,8 @@ class ProjectComponent extends Component {
                 projectTitle: response.data.projectTitle,
                 projectDescription: response.data.projectDescription,
                 projectState: response.data.projectState,
-                generalTaskQuantity: response.data.generalTaskQuantity,
-                inProgressTaskQuantity: response.data.inProgressTaskQuantity
+                generalTaskNumber: response.data.generalTaskNumber,
+                unfinishedTaskNumber: response.data.unfinishedTaskNumber
                 
             }))
     }
@@ -46,16 +46,16 @@ class ProjectComponent extends Component {
             errors.projectDescription = 'Please Enter at least 5 Characters in Description'
         }
         
-         else if (isNaN(values.generalTaskQuantity)) {
-            errors.generalTaskQuantity = 'Please Enter a Number in the Feeld (How Many Tasks Are Complited)'
+         else if (isNaN(values.generalTaskNumber)) {
+            errors.generalTaskNumber = 'Please Enter a Number in the Feeld (How Many Tasks Are Complited)'
         }
-        else if (isNaN(values.inProgressTaskQuantity)) {
-            errors.inProgressTaskQuantity = 'Please Enter a Number in the Feeld (How Many Tasks Not Done)'
+        else if (isNaN(values.unfinishedTaskNumber)) {
+            errors.unfinishedTaskNumber = 'Please Enter a Number in the Feeld (How Many Tasks Not Done)'
         }
         return errors
     }
 
-
+    unfinishedTaskNumber
 
    
 
@@ -66,8 +66,8 @@ class ProjectComponent extends Component {
             projectTitle: values.projectTitle,
             projectDescription: values.projectDescription,
             projectState: values.projectState,
-            generalTaskQuantity: values.generalTaskQuantity,
-            inProgressTaskQuantity: values.inProgressTaskQuantity,
+            generalTaskNumber: values.generalTaskNumber,
+            unfinishedTaskNumber: values.unfinishedTaskNumber,
             targetDate: values.targetDate
         }
         if (this.state.id === "new-project") {
@@ -82,7 +82,7 @@ class ProjectComponent extends Component {
     }
 
     render() {
-        let { projectTitle,projectDescription,projectState,generalTaskQuantity,inProgressTaskQuantity } = this.state
+        let { projectTitle,projectDescription,projectState,generalTaskNumber,unfinishedTaskNumber } = this.state
 
         return (
             <div>
@@ -91,7 +91,7 @@ class ProjectComponent extends Component {
                 <br/>
                 <div className="container">
                     <Formik
-                        initialValues={{ projectTitle, projectDescription ,projectState,generalTaskQuantity,inProgressTaskQuantity }}
+                        initialValues={{ projectTitle, projectDescription ,projectState,generalTaskNumber,unfinishedTaskNumber }}
                         onSubmit={this.onSubmit}
                         validateOnChange={false}
                         validateOnBlur={false}
@@ -106,11 +106,11 @@ class ProjectComponent extends Component {
                                         className="alert alert-warning" />
                                     <ErrorMessage name="projectDescription" component="div"
                                         className="alert alert-warning" />
-                                    <ErrorMessage name="generalTaskQuantity" component="div"
+                                    <ErrorMessage name="generalTaskNumber" component="div"
                                         className="alert alert-warning" />
-                                          <ErrorMessage name="generalTaskQuantity" component="div"
+                                          <ErrorMessage name="generalTaskNumber" component="div"
                                         className="alert alert-warning" />
-                                          <ErrorMessage name="inProgressTaskQuantity" component="div"
+                                          <ErrorMessage name="unfinishedTaskNumber" component="div"
                                         className="alert alert-warning" />
                                     <fieldset className="form-group">
                                         <label>Project Name</label>
@@ -140,12 +140,12 @@ class ProjectComponent extends Component {
                                   
                                     <fieldset className="form-group">
                                         <label>Amount of Tasks</label>
-                                        <Field className="form-control" type="text" name="generalTaskQuantity"  />
+                                        <Field className="form-control" type="text" name="generalTaskNumber"  />
                                     </fieldset>
                                   
                                     <fieldset className="form-group">
                                         <label>Uncompleted Tasks</label>
-                                        <Field className="form-control" type="text" name="inProgressTaskQuantity"  />
+                                        <Field className="form-control" type="text" name="unfinishedTaskNumber"  />
                                     </fieldset>
                                     
                                     <button className="btn btn-dark" type="submit">Save</button>

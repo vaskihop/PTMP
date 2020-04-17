@@ -14,9 +14,9 @@ class Main extends Component {
                         <Route path="/" exact component={ListProjectsComponent} />
                         <Route path="/projects" exact component={ListProjectsComponent} />
                         <Route path="/projects/:id" component={ProjectComponent} />
-                        <Route path="/project/" exact component={ProjectItems} />
-                        <Route path="/project/:id" exact component={ProjectItems} />
-                        <Route path="/project/new-list"  component={ProjectItemsUpdate} />
+                        <Route path="/tasks" exact component={ProjectItems} />
+                        <Route path="/tasks/:id/tasks" exact component={ProjectItems} />
+                        <Route path="/tasks/new-list"  component={ProjectItemsUpdate} />
                     </Switch>
                 </>
             </Router>
