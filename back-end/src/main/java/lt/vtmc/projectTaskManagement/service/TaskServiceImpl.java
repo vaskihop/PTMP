@@ -1,8 +1,6 @@
 package lt.vtmc.projectTaskManagement.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,9 +33,6 @@ public class TaskServiceImpl implements TaskService {
 		TaskEntity newTask=new TaskEntity(task.getTaskTitle(), task.getTaskDescription(), Priority.valueOf(task.getTaskPriority()), State.valueOf(task.getTaskState()), projectFromDB);
 		taskRepo.save(newTask);
 		projectFromDB.getTaskList().add(newTask);
-		projectFromDB.setGeneralTaskNumber();
-		projectFromDB.setUnfinishedTaskNumber();
-		projectFromDB.setProjectState();
 		projectRepo.save(projectFromDB);
 	}
 
@@ -48,9 +43,6 @@ public class TaskServiceImpl implements TaskService {
 		taskFromDB.setProject(null);
 		taskRepo.save(taskFromDB);
 		projectFromDB.getTaskList().removeIf(task->task.getId().equals(taskId));
-		projectFromDB.setGeneralTaskNumber();
-		projectFromDB.setUnfinishedTaskNumber();
-		projectFromDB.setProjectState();
 		projectRepo.save(projectFromDB);
 
 	}
@@ -67,13 +59,7 @@ public class TaskServiceImpl implements TaskService {
 		taskFromDB.setTaskPriority(Priority.valueOf(task.getTaskPriority()));
 		taskFromDB.setTaskState(State.valueOf(task.getTaskState()));
 		taskFromDB.setTaskTitle(task.getTaskTitle());
-		ProjectEntity projectFromDB=taskFromDB.getProject();
 		taskRepo.save(taskFromDB);
-		projectFromDB.setGeneralTaskNumber();
-		projectFromDB.setUnfinishedTaskNumber();
-		projectFromDB.setProjectState();
-		projectRepo.save(projectFromDB);
-
 	}
 
 }

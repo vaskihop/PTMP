@@ -53,9 +53,6 @@ public class ProjectTaskManagementApplication {
 			induPlovimas.getTaskList().add(saukstelioPlovimas);
 			induPlovimas.getTaskList().add(saukstoPlovimas);
 			induPlovimas.getTaskList().add(puodelioPlovimas);
-			induPlovimas.setGeneralTaskNumber();
-			induPlovimas.setUnfinishedTaskNumber();
-			induPlovimas.setProjectState();
 			projectRepo.save(induPlovimas);
 			taskRepo.save(saukstelioPlovimas);
 			taskRepo.save(saukstoPlovimas);
@@ -69,9 +66,6 @@ public class ProjectTaskManagementApplication {
 			vakariene.getTaskList().add(sriuba);
 			vakariene.getTaskList().add(sriubosGelbejimas);
 			vakariene.getTaskList().add(arbata);
-			vakariene.setGeneralTaskNumber();
-			vakariene.setUnfinishedTaskNumber();
-			vakariene.setProjectState();
 			projectRepo.save(vakariene);
 			taskRepo.save(sriuba);
 			taskRepo.save(sriubosGelbejimas);

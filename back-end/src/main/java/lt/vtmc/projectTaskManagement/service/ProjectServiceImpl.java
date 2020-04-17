@@ -17,15 +17,16 @@ public class ProjectServiceImpl implements ProjectService {
 	private ProjectRepository repo;
 
 	@Override
-	public List<ProjectEntity> getProjects() {
-		List<ProjectEntity> projectList=new ArrayList<ProjectEntity>();
-		repo.findAll().forEach(projectList::add);
+	public List<Project> getProjects() {
+		List<Project> projectList=new ArrayList<Project>();
+		
+		repo.findAll().forEach(projectEntity->projectList.add(new Project(projectEntity)));
 		return projectList;
 	}
 
 	@Override
 	public void addProject(Project project) {		
-		repo.save(new ProjectEntity(project.getProjectTitle(), project.getProjectDescription()));
+		repo.save(new ProjectEntity(project));
 
 	}
 
@@ -36,17 +37,21 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public ProjectEntity findProjecttById(Long projectId) {
-//		kadanors mes exception
-		return repo.findById(projectId).orElse(null);
+	public Project findProjecttById(Long projectId) {
+		ProjectEntity projectFromDB=findProjectById(projectId);
+		return new Project(projectFromDB);
 	}
 
 	@Override
 	public void updateProject(Long projectId, Project project) {
-		ProjectEntity updatedProject=findProjecttById(projectId);
-		updatedProject.setProjectTitle(project.getProjectTitle());
-		updatedProject.setProjectDescription(project.getProjectDescription());
+		ProjectEntity updatedProject=findProjectById(projectId);
+		updatedProject.updateProject(project);
 		repo.save(updatedProject);
+	}
+	
+	public ProjectEntity findProjectById(Long projectId) {
+//		kada nors mes exception
+		return repo.findById(projectId).orElse(null);
 	}
 
 }

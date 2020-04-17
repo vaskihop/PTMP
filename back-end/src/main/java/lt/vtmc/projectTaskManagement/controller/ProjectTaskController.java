@@ -36,13 +36,13 @@ public class ProjectTaskController {
 	
 	@GetMapping
 	@ApiOperation(value="Get projects", notes="Returns registered projects")
-	public List<ProjectEntity> getProjects(){
+	public List<Project> getProjects(){
 		return projectService.getProjects();
 	}
 	
 	@GetMapping("/{projectId}")
 	@ApiOperation(value="Get project by id", notes="Returns registered project by project's id")
-	public ProjectEntity getProjectById(@PathVariable Long projectId) {
+	public Project getProjectById(@PathVariable Long projectId) {
 		return projectService.findProjecttById(projectId);
 	}
 	
