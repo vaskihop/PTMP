@@ -30,7 +30,7 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public void addTask(Task task, Long projectId) {
 		ProjectEntity projectFromDB=projectRepo.findById(projectId).orElse(null);
-		TaskEntity newTask=new TaskEntity(task.getTaskTitle(), task.getTaskDescription(), Priority.valueOf(task.getTaskPriority()), State.valueOf(task.getTaskState()), projectFromDB);
+		TaskEntity newTask=new TaskEntity(task, projectFromDB);
 		taskRepo.save(newTask);
 		projectFromDB.getTaskList().add(newTask);
 		projectRepo.save(projectFromDB);
@@ -55,10 +55,7 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public void updateTask(Long taskId, Task task) {
 		TaskEntity taskFromDB=findTaskById(taskId);
-		taskFromDB.setTaskDescription(task.getTaskDescription());
-		taskFromDB.setTaskPriority(Priority.valueOf(task.getTaskPriority()));
-		taskFromDB.setTaskState(State.valueOf(task.getTaskState()));
-		taskFromDB.setTaskTitle(task.getTaskTitle());
+		taskFromDB.updateTask(task);
 		taskRepo.save(taskFromDB);
 	}
 
