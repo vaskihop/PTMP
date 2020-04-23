@@ -38,10 +38,15 @@ public class TaskEntity {
 	@Enumerated(EnumType.STRING)
 	private State taskState;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdAt;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date updatedAt;
+	@Temporal(TemporalType.DATE)
+	private Date createdAtDate;	
+	@Temporal(TemporalType.TIME)
+	private Date createdAtTime;
+	
+	@Temporal(TemporalType.DATE)
+	private Date updatedAtDate;	
+	@Temporal(TemporalType.TIME)
+	private Date updatedAtTime;
 	
 	@ManyToOne (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore
@@ -55,8 +60,8 @@ public class TaskEntity {
 		this.taskPriority = taskPriority;
 		this.taskState = taskState;
 		this.project = project;
-		createdAt=new Date();
-		updatedAt=new Date();
+		createdAtDate=new Date();
+		updatedAtDate=new Date();
 	}
 	
 	public TaskEntity(Task task, ProjectEntity project) {
@@ -66,8 +71,10 @@ public class TaskEntity {
 		this.taskPriority = Priority.valueOf(task.getTaskPriority());
 		this.taskState = State.valueOf(task.getTaskState());
 		
-		createdAt=new Date();
-		updatedAt=new Date();
+		this.createdAtDate=new Date();
+		this.createdAtTime=new Date();
+		this.updatedAtDate=new Date();
+		this.updatedAtTime=new Date();
 
 		this.project = project;
 	}
@@ -79,7 +86,8 @@ public class TaskEntity {
 		this.taskPriority = Priority.valueOf(task.getTaskPriority());
 		this.taskState = State.valueOf(task.getTaskState());
 
-		this.updatedAt = new Date();
+		this.updatedAtDate = new Date();
+		this.updatedAtTime=new Date();
 
 	}
 
