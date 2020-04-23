@@ -6,16 +6,16 @@ class AxiosFunctions {
         return axios.get(`http://localhost:8080/api/projects`);
     }
 
-    getProjectById(id) {   
-        return axios.get(`http://localhost:8080/api/projects/${id}`);
+    getProjectById(projectId) {   
+        return axios.get(`http://localhost:8080/api/projects/${projectId}`);
     }
 
-    deleteProject(id){
-       return axios.delete(`http://localhost:8080/api/projects/${id}`);
+    deleteProject(projectId){
+       return axios.delete(`http://localhost:8080/api/projects/${projectId}`);
     }
 
-    updateProject(id,project) {
-        return axios.put(`http://localhost:8080/api/projects/${id}`,project);
+    updateProject(projectId,project) {
+        return axios.put(`http://localhost:8080/api/projects/${projectId}`,project);
     }
 
     addProject(project) {
@@ -25,31 +25,49 @@ class AxiosFunctions {
 
     //????????????????????????????????????????????????????????????????????
 
-   getTask(id){
-       return axios.get(`http://localhost:8080/api/projects/${id}/tasks/`);
-     }
+   getTask(projectId){
+       return axios.get(`http://localhost:8080/api/projects/${projectId}/tasks`,
+       {headers: {
+        "Content-Type": "application/json"}
+    })
+}
+     
 
 
-    addTask(task,id){
-        return axios.post(`http://localhost:8080/api/projects/${id}/tasks`,task);
+    addTask(projectId,task){
+        return axios.post(`http://localhost:8080/api/projects/${projectId}/tasks`,task ,
+        {headers: {
+            "Content-Type": "application/json"}
+        })
+    }
+    
+
+     deleteTask(projectId,taskId){
+         return axios.delete(`http://localhost:8080/api/projects/${projectId}/tasks/${taskId}`,
+         {headers: {
+            "Content-Type": "application/json"}
+        })
     }
 
-     deleteTask(taskId){
-         return axios.delete(`http://localhost:8080/api/projects/tasks/${taskId}`);
-     }
 
-
-    getTaskById(taskId){
-        return axios.get(`http://localhost:8080/api/projects/tasks/${taskId}`);
+    getTaskById(projectId,taskId){
+        return axios.get(`http://localhost:8080/api/projects/${projectId}/tasks/${taskId}`,
+        {headers: {
+            "Content-Type": "application/json"}
+        })
     }
    
 
-    updateTaskById (taskId,task){
-        return axios.put(`http://localhost:8080/api/projects/tasks/${taskId}`,task);
+    updateTaskById (projectId,taskId,task){
+        return axios.put(`http://localhost:8080/api/projects/${projectId}/tasks/${taskId}`,task,
+
+        {headers: {
+            "Content-Type": "application/json"}
+        })
+    }
 
 
 
-}
 }
 
 export default new AxiosFunctions();

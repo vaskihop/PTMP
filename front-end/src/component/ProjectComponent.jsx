@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import AxiosFunctions from '../service/AxiosFunctions';
+import axios from "axios";
 
 class ProjectComponent extends Component {
     constructor(props) {
@@ -13,6 +14,7 @@ class ProjectComponent extends Component {
              generalTaskNumber: 0,
              unfinishedTaskNumber: 0
         }
+        console.log(this.state);
     }
 
     componentDidMount() {
@@ -46,23 +48,23 @@ class ProjectComponent extends Component {
             errors.projectDescription = 'Please Enter at least 5 Characters in Description'
         }
         
-         else if (isNaN(values.generalTaskNumber)) {
-            errors.generalTaskNumber = 'Please Enter a Number in the Feeld (How Many Tasks Are Complited)'
-        }
-        else if (isNaN(values.unfinishedTaskNumber)) {
-            errors.unfinishedTaskNumber = 'Please Enter a Number in the Feeld (How Many Tasks Not Done)'
-        }
+        //  else if (isNaN(values.generalTaskNumber)) {
+        //     errors.generalTaskNumber = 'Please Enter a Number in the Feeld (How Many Tasks Are Complited)'
+        // }
+        // else if (isNaN(values.unfinishedTaskNumber)) {
+        //     errors.unfinishedTaskNumber = 'Please Enter a Number in the Feeld (How Many Tasks Not Done)'
+        // }
         return errors
     }
 
-    unfinishedTaskNumber
 
    
 
     onSubmit=(values)=> {
+        
  
         let project = {
-            id: this.state.id,
+            // id: this.state.id,
             projectTitle: values.projectTitle,
             projectDescription: values.projectDescription,
             projectState: values.projectState,
@@ -71,18 +73,19 @@ class ProjectComponent extends Component {
             targetDate: values.targetDate
         }
         if (this.state.id === "new-project") {
-
             AxiosFunctions.addProject(project)
-                .then(() => this.props.history.push('/projects'))
+                .then(() => this.props.history.push(`/projects`))
         } else {
 
             AxiosFunctions.updateProject(this.state.id, project)
-                .then(() => this.props.history.push('/projects'))
+                .then(() => this.props.history.push(`/projects`))
         }
     }
 
     render() {
-        let { projectTitle,projectDescription,projectState,generalTaskNumber,unfinishedTaskNumber } = this.state
+        let { projectTitle,projectDescription
+            ,projectState,generalTaskNumber,unfinishedTaskNumber
+         } = this.state
 
         return (
             <div>
@@ -91,7 +94,8 @@ class ProjectComponent extends Component {
                 <br/>
                 <div className="container">
                     <Formik
-                        initialValues={{ projectTitle, projectDescription ,projectState,generalTaskNumber,unfinishedTaskNumber }}
+                        initialValues={{ projectTitle, projectDescription ,projectState,generalTaskNumber,unfinishedTaskNumber
+                         }}
                         onSubmit={this.onSubmit}
                         validateOnChange={false}
                         validateOnBlur={false}
@@ -124,7 +128,7 @@ class ProjectComponent extends Component {
 
 
 
-                                    <fieldset className="form-group">
+                                    {/* <fieldset className="form-group">
                                         <label>Project State</label>
                                         <Field className="btn btn-secondary d-block" as="select" name="projectState">
                                             <option value='true'>Done</option>
@@ -146,7 +150,7 @@ class ProjectComponent extends Component {
                                     <fieldset className="form-group">
                                         <label>Uncompleted Tasks</label>
                                         <Field className="form-control" type="text" name="unfinishedTaskNumber"  />
-                                    </fieldset>
+                                    </fieldset> */}
                                     
                                     <button className="btn btn-dark" type="submit">Save</button>
                                 </Form>

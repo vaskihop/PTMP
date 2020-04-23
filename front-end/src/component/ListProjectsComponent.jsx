@@ -38,7 +38,7 @@ class ListProjectsComponent extends Component {
     showProjectItems=(id)=>{
       
      //this.props.history.push(`/tasks/${id}`) 
-     this.props.history.push(`/tasks/${id}/tasks`)
+     this.props.history.push(`/projects/${id}/tasks`)
     }
   
 

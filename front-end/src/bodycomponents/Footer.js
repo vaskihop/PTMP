@@ -7,9 +7,9 @@ class Footer extends Component {
         return (
 
 
-
+          // <div className="footer navbar-fixed-bottom">
           
-            <footer className="page-footer bg-dark shadow-sm">
+            <footer className="page-footer bg-dark shadow-sm navbar-fixed-bottom">
     
            
               <div className="footer-copyright text-center py-3 text-light">
@@ -19,6 +19,7 @@ class Footer extends Component {
               </div>
             
             </footer>
+            // </div>
      
 
 

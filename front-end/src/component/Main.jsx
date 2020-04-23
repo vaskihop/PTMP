@@ -13,10 +13,12 @@ class Main extends Component {
                     <Switch>
                         <Route path="/" exact component={ListProjectsComponent} />
                         <Route path="/projects" exact component={ListProjectsComponent} />
-                        <Route path="/projects/:id" component={ProjectComponent} />
-                        <Route path="/tasks" exact component={ProjectItems} />
-                        <Route path="/tasks/:id/tasks" exact component={ProjectItems} />
-                        <Route path="/tasks/new-list"  component={ProjectItemsUpdate} />
+                        <Route path="/projects/:id" exact component={ProjectComponent} />
+                        <Route path="/projects/:id/tasks/" exact component={ProjectItems} />
+                        <Route path="/projects/:id1/tasks/:id2" exact  component={ProjectItemsUpdate} />
+                        <Route path="/projects/:id/tasks/projects/:id/tasks/" exact component={ProjectItems} />
+                        <Route path="/projects/:id/tasks/projects/task/:id/tasks/" exact component={ProjectItems} />
+                        
                     </Switch>
                 </>
             </Router>

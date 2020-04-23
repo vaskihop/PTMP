@@ -5,66 +5,74 @@ import AxiosFunctions from '../service/AxiosFunctions';
 class ProjectItemsUpdate extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-
-
-             id: this.props.match.params.id, 
-            taskId: '',
-            taskName: '',
+        this.state = {   
+            projectId: this.props.match.params.id1,
+            taskId: this.props.match.params.id2,
+            taskTitle: '',
             taskDescription: '',
-            taskPriority: false,
-            taskState: false,
-            taskDate: 0
+            taskPriority: 'LOW',
+            taskState: 'TODO'
+            // taskDate: 0
         }
+        
+        
     }
 
     componentDidMount() {
-        if (this.state.id === "new-list") {
-
+        if (this.state.taskId === "new") {
+          
             return
         }
-
-        AxiosFunctions.getProjectById( this.state.id)
+ 
+        AxiosFunctions.getTaskById(this.state.projectId,this.state.taskId,this.state)
             .then(response => this.setState({
-                taskId: response.data.taskId,
-                taskName: response.data.taskName,
+                // taskId: response.data.taskId,
+                taskTitle: response.data.taskTitle,
                 taskDescription: response.data.taskDescription,
-                taskPriority: response.data.taskPriority,
-                taskState: response.data.taskState,
-                taskDate: response.data.taskDate
+                 taskPriority: response.data.taskPriority,
+                 taskState: response.data.taskState
+                // taskDate: response.data.taskDate
                 
             }))
+            .then(console.log("SUAKAAA"));
     }
-
+    
 
 
 
    
 
-    // onSubmit=(values)=> {
- 
-    //     let project = {
-    //         id: this.state.id,
-    //         projectTitle: values.projectTitle,
-    //         projectDescription: values.projectDescription,
-    //         projectState: values.projectState,
-    //         generalTaskQuantity: values.generalTaskQuantity,
-    //         inProgressTaskQuantity: values.inProgressTaskQuantity,
-    //         targetDate: values.targetDate
-    //     }
-    //     if (this.state.id === "new-list") {
+    onSubmit=(values)=> {
+      
+        let task = {
+            // taskId: this.state.taskId,
+            taskTitle: values.taskTitle,
+            taskDescription: values.taskDescription,
+             taskPriority: values.taskPriority,
+             taskState: values.taskState
+            // inProgressTaskQuantity: values.inProgressTaskQuantity,
+            // targetDate: values.targetDate
+        }
+        console.log(task.taskTitle)
+        console.log(task.taskDescription)
+        if (this.state.taskId === "new") {
+            AxiosFunctions.addTask(this.state.projectId,task)
+                .then(() => this.props.history.push(`projects/task/${this.state.projectId}/tasks/`))
+                console.log(task)
+                
+        } else {
+            AxiosFunctions.updateTaskById(this.state.projectId,this.state.taskId,task)
+                .then(() => this.props.history.push(`projects/${this.state.projectId}/tasks/`))
 
-    //         AxiosFunctions.addProject(project)
-    //             .then(() => this.props.history.push('/project'))
-    //     } else {
-
-    //         AxiosFunctions.updateProject(this.state.id, project)
-    //             .then(() => this.props.history.push('/project'))
-    //     }
-    // }
+                
+    }
+    }
+   
 
     render() {
-        let { taskId,taskName,taskDescription,taskPriority,taskState,taskDate } = this.state
+        let { taskTitle,taskDescription
+             ,taskPriority,taskState
+         } = this.state
 
         return (
             <div>
@@ -73,7 +81,9 @@ class ProjectItemsUpdate extends Component {
                 <br/>
                 <div className="container">
                     <Formik
-                        initialValues={{ taskId, taskName ,taskDescription,taskPriority,taskState,taskDate }}
+                        initialValues={{  taskTitle ,taskDescription
+                             ,taskPriority,taskState 
+                        }}
                         onSubmit={this.onSubmit}
                         validateOnChange={false}
                         validateOnBlur={false}
@@ -85,47 +95,51 @@ class ProjectItemsUpdate extends Component {
                             
                                 <Form>
                                     
-                                    <fieldset className="form-group">
+                                    {/* <fieldset className="form-group">
                                         <label>Task ID</label>
-                                        <Field className="form-control" type="text" name="projectTitle"  />
-                                    </fieldset>
+                                        <Field className="form-control" type="text" name="taskId"  />
+                                    </fieldset> */}
                                    
                                     <fieldset className="form-group">
                                         <label>Task Name</label>
-                                        <Field className="form-control" type="text" name="projectDescription" />
+                                        <Field className="form-control" type="text" name="taskTitle" />
                                     </fieldset>
 
 
 
+                                    
+                                  
                                     <fieldset className="form-group">
-                                        <label>Task Description</label>
-                                        <Field className="btn btn-secondary d-block" as="select" name="projectState">
-                                            <option value='true'>Done</option>
-                                            <option value='false'>Not Done</option>
+                                        <label> Task Description</label>
+                                        <Field className="form-control" type="text" name="taskDescription"  />
+                                    </fieldset>
+                                  
+                                     <fieldset className="form-group">
+                                        <label>Task Priority</label>
+                                        <Field className="btn btn-secondary d-block" as="select" name="taskPriority">
+                                            <option value='LOW'>LOW</option>
+                                            <option value='MEDIUM'>MEDIUM</option>
+                                            <option value='HIGH'>HIGH</option>
                                         </Field>
                                     </fieldset>
 
-                                    
-                                    
-
+                                    <br/>
+                                   
+                                    <fieldset className="form-group">
+                                        <label>Task State</label>
+                                        <Field className="btn btn-secondary d-block" as="select" name="taskState">
+                                            <option value='TODO'>TODO</option>
+                                            <option value='INPROGRESS'>INPROGRESS</option>
+                                            <option value='DONE'>DONE</option>
+                                        </Field>
+                                    </fieldset> 
 
                                     <br/>
                                   
-                                    <fieldset className="form-group">
-                                        <label>Task Priority</label>
-                                        <Field className="form-control" type="text" name="generalTaskQuantity"  />
-                                    </fieldset>
-                                  
-                                    <fieldset className="form-group">
-                                        <label>Task State</label>
-                                        <Field className="form-control" type="text" name="inProgressTaskQuantity"  />
-                                    </fieldset>
+                                    
 
 
-                                    <fieldset className="form-group">
-                                        <label>Task date</label>
-                                        <Field className="form-control" type="text" name="inProgressTaskQuantity"  />
-                                    </fieldset>
+                                   
                                     
                                     <button className="btn btn-dark" type="submit">Save</button>
                                 </Form>
