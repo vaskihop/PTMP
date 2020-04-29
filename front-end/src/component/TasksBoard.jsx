@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import AxiosFunctions from '../service/AxiosFunctions';
 import ListProjectsComponent from './ListProjectsComponent';
-import Kanban from './Kanban';
+import TaskCard from './TaskCard';
+import TaskTest from "./TaskTest";
 
 
-class ProjectItems extends Component {
+
+class TasksBoard extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -122,8 +124,187 @@ class ProjectItems extends Component {
 
    }
 
+//    getTaskById
+// componentDidMount() {
+//     if (this.state.taskId === "new") {
+      
+//         return
+//     }
+
+//     AxiosFunctions.getTaskById(this.state.projectId,this.state.taskId,this.state)
+//         .then(response => this.setState({
+//             // taskId: response.data.taskId,
+//             taskTitle: response.data.taskTitle,
+//             taskDescription: response.data.taskDescription,
+//              taskPriority: response.data.taskPriority,
+//              taskState: response.data.taskState
+//             // taskDate: response.data.taskDate
+            
+//         }))
+//         .then(console.log("SUAKAAA"));
+// }
+   cardS(value){
+
+    console.log("VALUE "+value)
+      return(  
+            this.state.taskList.map(
+
+                task =>
+
+              
+                {if(task.id===value){
+
+                  return(
+              
+                   
+                <div  className="card mb-4 shadow-sm" style={{ width: '16rem' }} >
+                
+                  <div className="card-header">
+                    <h4 className="my-0 font-weight-normal">{task.taskTitle}</h4>
+                  </div>
+                  <div className="card-body">
+                    <ul className="list-unstyled mt-3 mb-4">
+                      <li>Description:{task.taskDescription}</li>
+                      <li>Priority:{task.taskPriority}</li>
+                      <li>Was Created:{task.createdAtDate}</li>
+                      <li>Last Updated:{task.updatedAtDate}</li>  
+                    </ul>
+                    <h4>Move to:</h4>
+                    
+                    <button type="button" className="btn btn-lg btn-block btn-primary">In Progress</button>
+                    <button type="button" className="btn btn-lg btn-block btn-primary">Done</button>
+                  </div>
+                </div>
+                
+                  )
+                }}
+                
+                )
+           
+
+           )
+          }     
+
+
+
+          cardS2(value){
+
+            console.log("VALUE "+value)
+              return(  
+                    this.state.taskList.map(
+        
+                        task =>
+        
+                      
+                        {if(task.id===value){
+
+                          
+        
+                          return(
+
+                     
+
+
+                            
+                            
+                        <div  className="card mb-4 shadow-sm " style={{ width: '16rem' }}>
+                        
+                          <div className="card-header">
+                            <h4 className="my-0 font-weight-normal">{task.taskTitle}</h4>
+                          </div>
+                          <div className="card-body">
+                            <ul className="list-unstyled mt-3 mb-4">
+                              <li>Description:{task.taskDescription}</li>
+                              <li>Priority:{task.taskPriority}</li>
+                              <li>Was Created:{task.createdAtDate}</li>
+                              <li>Last Updated:{task.updatedAtDate}</li>  
+                            </ul>
+                            <h4>Move to:</h4>
+                            
+                            <button type="button" className="btn btn-lg btn-block btn-primary">In Progress</button>
+                            <button type="button" className="btn btn-lg btn-block btn-primary">Done</button>
+                          </div>
+                        </div>
+
+
+
+                           
+
+
+
+
+
+                        
+                          )
+                        }}
+                        
+                        )
+                   
+        
+                   )
+                  }     
+
+                  cardS3(value){
+
+                    console.log("VALUE "+value)
+                      return(  
+                            this.state.taskList.map(
+                
+                                task =>
+                
+                              
+                                {if(task.id===value){
+                
+                                  return(
+                                    
+                                <div  className="card mb-4 shadow-sm " style={{ width: '16rem' }}>
+                                
+                                  <div className="card-header">
+                                    <h4 className="my-0 font-weight-normal">{task.taskTitle}</h4>
+                                  </div>
+                                  <div className="card-body">
+                                    <ul className="list-unstyled mt-3 mb-4">
+                                      <li>Description:{task.taskDescription}</li>
+                                      <li>Priority:{task.taskPriority}</li>
+                                      <li>Was Created:{task.createdAtDate}</li>
+                                      <li>Last Updated:{task.updatedAtDate}</li>  
+                                    </ul>
+                                    <h4>Move to:</h4>
+                                    
+                                    <button type="button" className="btn btn-lg btn-block btn-primary">In Progress</button>
+                                    <button type="button" className="btn btn-lg btn-block btn-primary">Done</button>
+                                  </div>
+                                </div>
+                                
+                                  )
+                                }}
+                                
+                                )
+                           
+                
+                           )
+                          }     
+
+
+
+
+       
+   
+
+
+
+
 
     render() {
+
+      const todo = this.state.taskList.filter(task => task.taskState === "TODO");
+      const inprogress = this.state.taskList.filter(task => task.taskState === "INPROGRESS");
+      const done = this.state.taskList.filter(task => task.taskState === "DONE");
+      // console.log("ETO");
+      // console.log(inprogress);
+      // console.log("ETO");
+
+      // <TaskCard taskList = {} />
         
 
         return (
@@ -166,6 +347,8 @@ class ProjectItems extends Component {
                         <tbody>
                             {
                                 this.state.taskList.map(
+
+                                  
                                     
                     
                                     task =>
@@ -191,10 +374,56 @@ class ProjectItems extends Component {
                        
                     </div> */}
                 </div>
-            </div>
+
+               
+
+               
+                       
+
+
+
+
+          
+      <div className="container">
+  <div className="row">
+    <div className="col-4">
+    <TaskTest taskList = {todo} />
+    {/* <div className="">{(task.taskState==="TODO" ? this.cardS(task.id):(task.taskState==="INPROGRESS" ? null:(task.taskState==="DONE" ? null:null)))}</div> */}
+    {/* <TaskCard taskList = {} /> */}
+    {/* <TaskCard taskList = {todo} /> */}
+    </div>
+    <div className="col-4">
+    {/* <TaskCard taskList = {inprogress} /> */}
+    <TaskTest taskList = {inprogress} />
+    {/* <div className="">{(task.taskState==="INPROGRESS" ? this.cardS(task.id):(task.taskState==="TODO" ? null:(task.taskState==="DONE" ? null:null)))}</div> */}
+    {/* <TaskCard taskList = {inprogress} /> */}
+    {/* <TaskCard taskList = {} /> */}
+    {/* <div className="">{(task.taskState==="INPROGRESS" ? this.cardS(task.id):null)}</div> */}
+    </div>
+    
+    <div className="col-4">
+       {/* <TaskCard taskList = {done} /> */}
+       <TaskTest taskList = {done} />
+    {/* <div className="">{(task.taskState==="DONE" ? this.cardS(task.id):(task.taskState==="TODO" ? null:(task.taskState==="INPROGRESS" ? null:null)))}</div> */}
+    {/* <div className="">{(task.taskState==="DONE" ? this.cardS(task.id):null)}</div> */}
+    </div>
+  </div>
+</div>  
+    
+  </div>
+  
+
+
+
+
+
+
+
         )
+        
     }
+
 }
 
-export default ProjectItems;
+export default TasksBoard;
 

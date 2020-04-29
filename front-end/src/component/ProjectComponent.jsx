@@ -89,10 +89,11 @@ class ProjectComponent extends Component {
 
         return (
             <div>
+                
+                <div className="container">
                 <br/>
                 <h3>Please Add/Update Project Here</h3>
                 <br/>
-                <div className="container">
                     <Formik
                         initialValues={{ projectTitle, projectDescription ,projectState,generalTaskNumber,unfinishedTaskNumber
                          }}
@@ -117,42 +118,21 @@ class ProjectComponent extends Component {
                                           <ErrorMessage name="unfinishedTaskNumber" component="div"
                                         className="alert alert-warning" />
                                     <fieldset className="form-group">
-                                        <label>Project Name</label>
+                                        <label className="font-weight-bold"> Project Name:</label>
                                         <Field className="form-control" type="text" name="projectTitle"  />
                                     </fieldset>
                                    
                                     <fieldset className="form-group">
-                                        <label>Description</label>
+                                        <label className="font-weight-bold">Description:</label>
                                         <Field className="form-control" type="text" name="projectDescription" />
                                     </fieldset>
 
 
 
-                                    {/* <fieldset className="form-group">
-                                        <label>Project State</label>
-                                        <Field className="btn btn-secondary d-block" as="select" name="projectState">
-                                            <option value='true'>Done</option>
-                                            <option value='false'>Not Done</option>
-                                        </Field>
-                                    </fieldset>
-
-                                    
-                                    
-
-
-                                    <br/>
                                   
-                                    <fieldset className="form-group">
-                                        <label>Amount of Tasks</label>
-                                        <Field className="form-control" type="text" name="generalTaskNumber"  />
-                                    </fieldset>
-                                  
-                                    <fieldset className="form-group">
-                                        <label>Uncompleted Tasks</label>
-                                        <Field className="form-control" type="text" name="unfinishedTaskNumber"  />
-                                    </fieldset> */}
-                                    
+                                    <a className="btn btn-dark" href="http://localhost:3000/" role="button">Go Back</a>&nbsp;&nbsp;
                                     <button className="btn btn-dark" type="submit">Save</button>
+                                    
                                 </Form>
                             )
                         }

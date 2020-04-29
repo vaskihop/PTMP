@@ -37,7 +37,7 @@ class ListProjectsComponent extends Component {
 
     showProjectItems=(id)=>{
       
-     //this.props.history.push(`/tasks/${id}`) 
+    
      this.props.history.push(`/projects/${id}/tasks`)
     }
   
@@ -50,6 +50,7 @@ class ListProjectsComponent extends Component {
     updateProjectClicked=(id)=> {
         this.props.history.push(`/projects/${id}`)
     }
+  
 
     render() {
         return (
@@ -57,8 +58,10 @@ class ListProjectsComponent extends Component {
                 
                 <br/>
                 <div className="row">
-                        <button className="btn btn-dark" onClick={this.addProjectClicked}>Add a New Project</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button className="btn btn-dark" onClick={this.addProjectClicked}>New Project</button> 
+                       
                         <h3>&nbsp;&nbsp;&nbsp;All Projects List</h3>
+                                   
                 </div>
                 
                 
@@ -68,10 +71,11 @@ class ListProjectsComponent extends Component {
                     <table className="table">
                         <thead>
                             <tr>
+                                <th>Task List</th>
                                 <th>Project Name</th>
                                 <th>Description</th>
                                 <th>Project State</th>
-                                <th>Amount of Tasks</th>
+                                <th>Total Tasks</th>
                                 <th>Uncompleted Tasks</th>
                                 <th>Update</th>
                                 <th>Delete</th>
@@ -83,11 +87,28 @@ class ListProjectsComponent extends Component {
                                    project =>
                                         
                                         <tr key={project.id}>
-                                             <td onClick={() => this.showProjectItems(project.id)}>{project.projectTitle}</td> 
+                                            <td><button className="btn btn-dark" onClick={() => this.showProjectItems(project.id)}>Task List</button></td>
+                                            <td>{project.projectTitle}</td> 
                                             <td>{project.projectDescription}</td>
-                                            <td>{project.projectState ? 'Done':'Not Done'}</td> 
-                                            <td>{project.generalTaskNumber}</td>
-                                            <td>{project.unfinishedTaskNumber}</td>
+                                            <td className="text-center">{project.projectState ?
+                                            <svg className="bi bi-check" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fillRule="evenodd" d="M13.854 3.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 11.708-.708L6.5 10.293l6.646-6.647a.5.5 0 01.708 0z" clipRule="evenodd"/>
+                                          </svg>
+                                             :
+                                             <svg className="bi bi-x" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fillRule="evenodd" d="M11.854 4.146a.5.5 0 010 .708l-7 7a.5.5 0 01-.708-.708l7-7a.5.5 0 01.708 0z" clipRule="evenodd"/>
+  <path fillRule="evenodd" d="M4.146 4.146a.5.5 0 000 .708l7 7a.5.5 0 00.708-.708l-7-7a.5.5 0 00-.708 0z" clipRule="evenodd"/>
+</svg>
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             }</td> 
+                                            <td className="text-center">{project.generalTaskNumber}</td>
+                                            <td className="text-center">{project.unfinishedTaskNumber}</td>
                                             <td><button className="btn btn-dark" onClick={() => this.updateProjectClicked(project.id)}>Update</button></td>
                                             <td><button className="btn btn-dark" onClick={() => this.deleteProjectClicked(project.id)}>Delete</button></td>
                                         </tr>
@@ -95,10 +116,7 @@ class ListProjectsComponent extends Component {
                             }
                         </tbody>
                     </table>
-                    {/* <div className="row">
-                        <button className="btn btn-dark" onClick={this.addProjectClicked}>Add New Project</button>
-                       
-                    </div> */}
+                  
                 </div>
             </div>
         )

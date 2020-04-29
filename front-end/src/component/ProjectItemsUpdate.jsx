@@ -26,15 +26,15 @@ class ProjectItemsUpdate extends Component {
  
         AxiosFunctions.getTaskById(this.state.projectId,this.state.taskId,this.state)
             .then(response => this.setState({
-                // taskId: response.data.taskId,
+               
                 taskTitle: response.data.taskTitle,
                 taskDescription: response.data.taskDescription,
                  taskPriority: response.data.taskPriority,
                  taskState: response.data.taskState
-                // taskDate: response.data.taskDate
+               
                 
             }))
-            .then(console.log("SUAKAAA"));
+           
     }
     
 
@@ -66,8 +66,13 @@ class ProjectItemsUpdate extends Component {
 
                 
     }
-    }
    
+    }
+    goBack=()=>{
+        this.props.history.push(`projects/${this.state.projectId}/tasks/`)
+    }
+
+
 
     render() {
         let { taskTitle,taskDescription
@@ -76,10 +81,15 @@ class ProjectItemsUpdate extends Component {
 
         return (
             <div>
-                <br/>
-                <h3>Please Add/Update Project List Here</h3>
-                <br/>
+                
                 <div className="container">
+                <br/>
+                <div className="row">
+               
+                <button className="btn btn-dark" onClick={() => this.goBack(this.state.projectId)}>Go back</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                <h3>Please Add/Update Task Here</h3>
+                </div>
+                <br/>
                     <Formik
                         initialValues={{  taskTitle ,taskDescription
                              ,taskPriority,taskState 
@@ -101,7 +111,7 @@ class ProjectItemsUpdate extends Component {
                                     </fieldset> */}
                                    
                                     <fieldset className="form-group">
-                                        <label>Task Name</label>
+                                        <label  className="font-weight-bold" >Task Name:</label>
                                         <Field className="form-control" type="text" name="taskTitle" />
                                     </fieldset>
 
@@ -110,38 +120,46 @@ class ProjectItemsUpdate extends Component {
                                     
                                   
                                     <fieldset className="form-group">
-                                        <label> Task Description</label>
+                                        <label className="font-weight-bold" > Task Description:</label>
                                         <Field className="form-control" type="text" name="taskDescription"  />
                                     </fieldset>
-                                  
+
+                                  <div className= "row">
                                      <fieldset className="form-group">
-                                        <label>Task Priority</label>
-                                        <Field className="btn btn-secondary d-block" as="select" name="taskPriority">
+                                        <label className="font-weight-bold" >Task Priority:</label>
+                                        <Field className="btn btn-dark d-block" as="select" name="taskPriority">
                                             <option value='LOW'>LOW</option>
                                             <option value='MEDIUM'>MEDIUM</option>
                                             <option value='HIGH'>HIGH</option>
                                         </Field>
                                     </fieldset>
 
-                                    <br/>
-                                   
+                                    
+                                    &nbsp;&nbsp;&nbsp;
                                     <fieldset className="form-group">
-                                        <label>Task State</label>
-                                        <Field className="btn btn-secondary d-block" as="select" name="taskState">
+                                        <label className="font-weight-bold" >Task State:</label>
+                                        <Field className="btn btn-dark d-block" as="select" name="taskState">
                                             <option value='TODO'>TODO</option>
                                             <option value='INPROGRESS'>INPROGRESS</option>
                                             <option value='DONE'>DONE</option>
                                         </Field>
-                                    </fieldset> 
+                                    </fieldset>  
+                                    &nbsp;&nbsp;&nbsp;
 
-                                    <br/>
-                                  
+
+                                    <fieldset className="form-group">
+                                        <label className="font-weight-bold" >Save:</label>
+                                        <button className="btn btn-dark  d-block" type="submit">Submit</button>
+                                    </fieldset>  
+                                    &nbsp;
+                                   
+
                                     
-
-
+                                    
                                    
                                     
-                                    <button className="btn btn-dark" type="submit">Save</button>
+                                    </div>
+                                   
                                 </Form>
                             )
                         }
