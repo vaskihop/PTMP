@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
@@ -66,7 +67,7 @@ public class ProjectTaskController {
 	
 	//--------->tasks<--------
 	
-	@GetMapping("{projectId}/tasks")
+	@GetMapping("/{projectId}/tasks")
 	@ApiOperation(value="Get tasks", notes="Returns registered tasks")
 	public List<TaskEntity> getTask(@PathVariable Long projectId){
 		return taskService.getTasks(projectId);
@@ -93,6 +94,20 @@ public class ProjectTaskController {
 	@ApiOperation(value="Update task by id", notes="Updates task by task's id")
 	public void updateTask(@PathVariable Long taskId, @RequestBody Task task) {
 		taskService.updateTask(taskId, task);
+	}
+	
+	//------>search<------
+	
+	@GetMapping("/projectSearch")
+//	@ApiOperation(value="Get tasks", notes="Returns registered tasks")
+	public List<Project> projectSearchByTitle(@RequestParam String title){
+		return projectService.findProjectsByTitle(title);
+	}
+	
+	@GetMapping("/{projectId}/taskSearch")
+//	@ApiOperation(value="Get tasks", notes="Returns registered tasks")
+	public List<TaskEntity> taskSearchByIdOrTitle(@PathVariable Long projectId, @RequestParam String idOrTitle){
+		return taskService.findTaskByIdOrTitle( idOrTitle);
 	}
 
 }

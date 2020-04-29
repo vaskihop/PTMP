@@ -59,5 +59,17 @@ public class TaskServiceImpl implements TaskService {
 		taskRepo.save(taskFromDB);
 	}
 
+	@Override
+	public List<TaskEntity> findTaskByIdOrTitle(String idOrTitle) {
+//		ProjectEntity projectFromDB=projectRepo.findById(projectId).orElse(null);
+		Long id=0L;
+		try {
+			id=Long.parseLong(idOrTitle);
+		} catch (NumberFormatException e) {
+		}
+		
+		return taskRepo.findTaskEntityByIdOrTaskTitleContainsIgnoreCase(id, idOrTitle);
+	}
+
 }
 

@@ -13,8 +13,10 @@ public interface ProjectService {
 	
 	void deleteProject(Long projectId);
 	
-	public Project findProjecttById(Long projectId);
+	Project findProjecttById(Long projectId);
 	
 	void updateProject(Long projectId, Project project);
+	
+	List<Project> findProjectsByTitle(String title);
 
 }
