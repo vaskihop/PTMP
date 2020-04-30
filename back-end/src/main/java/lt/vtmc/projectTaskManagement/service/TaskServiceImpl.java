@@ -5,8 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lt.vtmc.projectTaskManagement.enums.Priority;
-import lt.vtmc.projectTaskManagement.enums.State;
 import lt.vtmc.projectTaskManagement.model.ProjectEntity;
 import lt.vtmc.projectTaskManagement.model.Task;
 import lt.vtmc.projectTaskManagement.model.TaskEntity;
@@ -24,7 +22,9 @@ public class TaskServiceImpl implements TaskService {
 
 	@Override
 	public List<TaskEntity> getTasks(Long projectId) {
+
 		return projectRepo.findById(projectId).orElse(null).getTaskList();
+		
 	}
 
 	@Override
@@ -57,6 +57,18 @@ public class TaskServiceImpl implements TaskService {
 		TaskEntity taskFromDB=findTaskById(taskId);
 		taskFromDB.updateTask(task);
 		taskRepo.save(taskFromDB);
+	}
+
+	@Override
+	public List<TaskEntity> findTaskByIdOrTitle(String idOrTitle, Long projectId) {
+		ProjectEntity projectFromDB=projectRepo.findById(projectId).orElse(null);
+		Long id=0L;
+		try {
+			id=Long.parseLong(idOrTitle);
+		} catch (NumberFormatException e) {
+		}
+		
+		return taskRepo.findAllTaskEntityByProjectAndIdOrProjectAndTaskTitleContainsIgnoreCase(projectFromDB, id, projectFromDB, idOrTitle);
 	}
 
 }

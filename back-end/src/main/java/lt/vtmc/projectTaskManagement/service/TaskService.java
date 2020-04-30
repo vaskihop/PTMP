@@ -16,5 +16,7 @@ public interface TaskService {
 	TaskEntity findTaskById(Long taskId);
 	
 	void updateTask(Long taskId, Task task);
+	
+	List<TaskEntity> findTaskByIdOrTitle(String idOrTitle, Long projectId);
 
 }

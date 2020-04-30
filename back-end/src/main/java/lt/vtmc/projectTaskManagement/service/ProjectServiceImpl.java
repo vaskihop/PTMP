@@ -53,5 +53,12 @@ public class ProjectServiceImpl implements ProjectService {
 //		kada nors mes exception
 		return repo.findById(projectId).orElse(null);
 	}
+	
+	@Override
+	public List<Project> findProjectsByTitle(String title) {
+		List<Project> projectList=new ArrayList<Project>();
+		repo.findProjectEntityByProjectTitleContainsIgnoreCase(title).forEach(projectEntity->projectList.add(new Project(projectEntity)));
+		return projectList;
+	}
 
 }
