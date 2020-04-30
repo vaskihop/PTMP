@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lt.vtmc.projectTaskManagement.model.Project;
-import lt.vtmc.projectTaskManagement.model.ProjectEntity;
 import lt.vtmc.projectTaskManagement.model.Task;
 import lt.vtmc.projectTaskManagement.model.TaskEntity;
 import lt.vtmc.projectTaskManagement.service.ProjectService;
@@ -107,7 +106,7 @@ public class ProjectTaskController {
 	@GetMapping("/{projectId}/taskSearch")
 //	@ApiOperation(value="Get tasks", notes="Returns registered tasks")
 	public List<TaskEntity> taskSearchByIdOrTitle(@PathVariable Long projectId, @RequestParam String idOrTitle){
-		return taskService.findTaskByIdOrTitle( idOrTitle);
+		return taskService.findTaskByIdOrTitle(idOrTitle, projectId);
 	}
 
 }

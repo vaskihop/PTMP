@@ -2,7 +2,6 @@ package lt.vtmc.projectTaskManagement.service;
 
 import java.util.List;
 
-import lt.vtmc.projectTaskManagement.model.ProjectEntity;
 import lt.vtmc.projectTaskManagement.model.Task;
 import lt.vtmc.projectTaskManagement.model.TaskEntity;
 
@@ -18,7 +17,6 @@ public interface TaskService {
 	
 	void updateTask(Long taskId, Task task);
 	
-	List<TaskEntity> findTaskByIdOrTitle(String idOrTitle);
-	
+	List<TaskEntity> findTaskByIdOrTitle(String idOrTitle, Long projectId);
 
 }
