@@ -2,6 +2,8 @@ package lt.vtmc.projectTaskManagement.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +23,7 @@ import lt.vtmc.projectTaskManagement.model.Task;
 import lt.vtmc.projectTaskManagement.model.TaskEntity;
 import lt.vtmc.projectTaskManagement.service.ProjectService;
 import lt.vtmc.projectTaskManagement.service.TaskService;
+import lt.vtmc.projectTaskManagement.util.ProjectTaskCSVWriter;
 
 @RestController
 @CrossOrigin(origins="http://localhost:3000")
@@ -64,7 +67,7 @@ public class ProjectTaskController {
 		projectService.updateProject(projectId, project);
 	}
 	
-	//--------->tasks<--------
+	//--------->tasks<---------
 	
 	@GetMapping("/{projectId}/tasks")
 	@ApiOperation(value="Get tasks", notes="Returns registered tasks")
@@ -95,7 +98,7 @@ public class ProjectTaskController {
 		taskService.updateTask(taskId, task);
 	}
 	
-	//------>search<------
+	//--------->search<---------
 	
 	@GetMapping("/projectSearch")
 //	@ApiOperation(value="Get tasks", notes="Returns registered tasks")
@@ -107,6 +110,26 @@ public class ProjectTaskController {
 //	@ApiOperation(value="Get tasks", notes="Returns registered tasks")
 	public List<TaskEntity> taskSearchByIdOrTitle(@PathVariable Long projectId, @RequestParam String idOrTitle){
 		return taskService.findTaskByIdOrTitle(idOrTitle, projectId);
+	}
+	
+//	--------->csv<---------
+	
+	@GetMapping(value="/{projectId}/exportTasks", produces = "text/csv")
+	public void exportTasks(HttpServletResponse res, @PathVariable Long projectId) {
+		try {
+			new ProjectTaskCSVWriter<TaskEntity>().writeProjectOrTaskToCSV(res.getWriter(), taskService.getTasks(projectId));
+		} catch (Exception e) {
+
+		}
+	}
+	
+	@GetMapping(value="/exportProjects", produces = "text/csv")
+	public void exportProjects(HttpServletResponse res) {
+		try {
+			new ProjectTaskCSVWriter<Project>().writeProjectOrTaskToCSV(res.getWriter(), projectService.getProjects());
+		} catch (Exception e) {
+
+		}
 	}
 
 }
