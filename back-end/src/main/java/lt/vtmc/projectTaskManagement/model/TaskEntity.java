@@ -16,6 +16,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.opencsv.bean.CsvBindByName;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,21 +29,30 @@ import lt.vtmc.projectTaskManagement.enums.State;
 public class TaskEntity {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@CsvBindByName
 	private Long id;
+	@CsvBindByName
 	private String taskTitle;
+	@CsvBindByName
 	private String taskDescription;
+	@CsvBindByName
 	@Enumerated(EnumType.STRING)
 	private Priority taskPriority;
+	@CsvBindByName
 	@Enumerated(EnumType.STRING)
 	private State taskState;
 	
+	@CsvBindByName
 	@Temporal(TemporalType.DATE)
 	private Date createdAtDate;	
+	@CsvBindByName
 	@Temporal(TemporalType.TIME)
 	private Date createdAtTime;
 	
+	@CsvBindByName
 	@Temporal(TemporalType.DATE)
 	private Date updatedAtDate;	
+	@CsvBindByName
 	@Temporal(TemporalType.TIME)
 	private Date updatedAtTime;
 	
@@ -58,8 +68,11 @@ public class TaskEntity {
 		this.taskPriority = taskPriority;
 		this.taskState = taskState;
 		this.project = project;
-		createdAtDate=new Date();
-		updatedAtDate=new Date();
+
+		this.createdAtDate=new Date();
+		this.createdAtTime=new Date();
+		this.updatedAtDate=new Date();
+		this.updatedAtTime=new Date();
 	}
 	
 	public TaskEntity(Task task, ProjectEntity project) {
@@ -88,14 +101,5 @@ public class TaskEntity {
 		this.updatedAtTime=new Date();
 
 	}
-
-
-
-	
-	
-	
-	
-	
-	
 
 }
