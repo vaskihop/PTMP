@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import AxiosFunctions from '../service/AxiosFunctions';
-import ListProjectsComponent from './ListProjectsComponent';
-import Kanban from './Kanban';
+// import ListProjectsComponent from './ListProjectsComponent';
+// import Kanban from './Kanban';
 
 
 class ProjectItems extends Component {
@@ -186,10 +186,7 @@ class ProjectItems extends Component {
                             }
                         </tbody>
                     </table>
-                    {/* <div className="row">
-                        <button className="btn btn-dark" onClick={this.addProjectClicked}>Add New Project</button>
-                       
-                    </div> */}
+                  
                 </div>
             </div>
         )

@@ -5,7 +5,7 @@ import ProjectComponent from './ProjectComponent';
 import ProjectItems from './ProjectItems';
 import ProjectItemsUpdate from './ProjectItemsUpdate';
 import TasksBoard from './TasksBoard';
-import Kanban from './Kanban';
+import SerchProject from './SerchProject';
 
 class Main extends Component {
     render() {
@@ -21,7 +21,9 @@ class Main extends Component {
                         <Route path="/projects/:id/tasks/projects/:id/tasks/" exact component={ProjectItems} />
                         <Route path="/projects/:id/tasks/projects/task/:id/tasks/" exact component={ProjectItems} />
                         <Route path="/projects/:id/board/" exact component={TasksBoard} />
-                        <Route path="/projects/:id/kanban/" exact component={Kanban} />
+                        <Route path="/projects/serch/" exact component={SerchProject} />
+                        
+                        
                         
                     </Switch>
                 </>

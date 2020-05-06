@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 class AxiosFunctions {
-
+/////////////////Projects
     retrieveAllProjects() {
         return axios.get(`http://localhost:8080/api/projects`);
     }
@@ -23,7 +23,7 @@ class AxiosFunctions {
 
     }
 
-    //????????????????????????????????????????????????????????????????????
+    //////////////////Projects Tasks
 
    getTask(projectId){
        return axios.get(`http://localhost:8080/api/projects/${projectId}/tasks`,
@@ -65,6 +65,20 @@ class AxiosFunctions {
             "Content-Type": "application/json"}
         })
     }
+    ////////////Serch
+
+
+    projectSearchByTitle(title){
+        return axios.get(`http://localhost:8080/api/projects/projectSearch?title=${title}`)
+    }
+
+    
+   
+
+    taskSearchByIdOrTitle (projectId,idOrTitle){
+        return axios.get(`http://localhost:8080/api/projects/${projectId}/taskSearch?idOrTitle=${idOrTitle}`)
+    }
+
 
 
 

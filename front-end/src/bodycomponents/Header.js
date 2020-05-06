@@ -1,9 +1,42 @@
 import React, { Component } from 'react';
+import AxiosFunctions from '../service/AxiosFunctions';
 
 
 
 class Header extends Component {
+  constructor(){
+    super();
+    this.state={
+      data:''
+    }
+    console.log(this.state.data)
+  }
+
+ 
+
+  handle=(event)=>{
+
+    this.setState({
+     data:event.target.value
+    })
+  }
+
+  returnFun = (e) => {
+    e.preventDefault();
+    
+    AxiosFunctions.projectSearchByTitle(this.state.data)
+    .then(res => { 
+      const data = res.data;
+      console.log(data);
+    }); 
+
+    console.log("this.state.data");
+    console.log(this.state.data);
+    console.log("this.state.data");
+  }
     render() {
+
+
         return (
             
 <div className="navbar navbar-dark bg-dark shadow-sm">
@@ -14,12 +47,16 @@ class Header extends Component {
 </svg>
         <strong>&nbsp;PTMP</strong>
       </a>
+      <div>{this.state.data}</div>
      
-    
-      <form className="form-inline my-2 my-lg-0">
-      <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"/>
-      <button className="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-    </form>
+{/*     
+      <form className="form-inline my-2 my-lg-0" onSubmit={this.returnFun}>
+      <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" 
+      onChange = {this.handle}/>
+
+      <button type="submit" 
+      className="btn btn-primary">Search</button>
+    </form> */}
       
       
     </div>
@@ -28,3 +65,6 @@ class Header extends Component {
     }
 }
 export default Header;
+
+
+

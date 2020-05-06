@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import AxiosFunctions from '../service/AxiosFunctions';
 import TaskTest from './TaskTest';
 
-class ListProjectsComponent extends Component {
+class SerchProject extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -51,13 +51,6 @@ class ListProjectsComponent extends Component {
         this.props.history.push(`/projects/${id}`)
     }
 
-    search = (projects) => {
-        console.log("Proshlo");
-        console.log(projects);
-        this.setState({projects});
-        console.log("Proshlo");
-    }
-
 
   
 
@@ -74,7 +67,7 @@ class ListProjectsComponent extends Component {
                        <h3 className="d-inline pl-4">All Projects List</h3>
                         </div>
                         <div className="col-4">
-                            <TaskTest  search={this.search}  />
+                            <TaskTest />
                         </div>
                                    
                 </div>
@@ -86,14 +79,14 @@ class ListProjectsComponent extends Component {
                     <table className="table">
                         <thead>
                             <tr>
-                                <th>Task List</th>
-                                <th>Project Name</th>
-                                <th>Description</th>
-                                <th>Project State</th>
-                                <th>Total Tasks</th>
-                                <th>Uncompleted Tasks</th>
-                                <th>Update</th>
-                                <th>Delete</th>
+                                <th>SABAKA</th>
+                                <th>SABAKA Name</th>
+                                <th>SABAKA</th>
+                                <th>ProjecSABAKAt State</th>
+                                <th>SABAKA Tasks</th>
+                                <th>SABAKA Tasks</th>
+                                <th>SABAKA</th>
+                                <th>SABAKA</th>
                             </tr>
                         </thead>
                         <tbody >
@@ -138,5 +131,5 @@ class ListProjectsComponent extends Component {
     }
 }
 
-export default ListProjectsComponent;
+export default SerchProject;
 

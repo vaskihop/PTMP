@@ -12,46 +12,31 @@ class ProjectItemsUpdate extends Component {
             taskDescription: '',
             taskPriority: 'LOW',
             taskState: 'TODO'
-            // taskDate: 0
-        }
-        
-        
+        }       
     }
-
     componentDidMount() {
-        if (this.state.taskId === "new") {
-          
+        if (this.state.taskId === "new") {      
             return
         }
- 
         AxiosFunctions.getTaskById(this.state.projectId,this.state.taskId,this.state)
-            .then(response => this.setState({
-               
+      
+            .then(response => this.setState({             
                 taskTitle: response.data.taskTitle,
                 taskDescription: response.data.taskDescription,
                  taskPriority: response.data.taskPriority,
-                 taskState: response.data.taskState
-               
-                
+                 taskState: response.data.taskState              
             }))
            
     }
-    
 
-
-
-   
-
-    onSubmit=(values)=> {
-      
+    onSubmit=(values)=> {    
         let task = {
-            // taskId: this.state.taskId,
+
             taskTitle: values.taskTitle,
             taskDescription: values.taskDescription,
              taskPriority: values.taskPriority,
              taskState: values.taskState
-            // inProgressTaskQuantity: values.inProgressTaskQuantity,
-            // targetDate: values.targetDate
+
         }
         console.log(task.taskTitle)
         console.log(task.taskDescription)
@@ -104,21 +89,13 @@ class ProjectItemsUpdate extends Component {
                             (props) => (
                             
                                 <Form>
-                                    
-                                    {/* <fieldset className="form-group">
-                                        <label>Task ID</label>
-                                        <Field className="form-control" type="text" name="taskId"  />
-                                    </fieldset> */}
+
                                    
                                     <fieldset className="form-group">
                                         <label  className="font-weight-bold" >Task Name:</label>
                                         <Field className="form-control" type="text" name="taskTitle" />
                                     </fieldset>
-
-
-
-                                    
-                                  
+                     
                                     <fieldset className="form-group">
                                         <label className="font-weight-bold" > Task Description:</label>
                                         <Field className="form-control" type="text" name="taskDescription"  />
@@ -152,13 +129,7 @@ class ProjectItemsUpdate extends Component {
                                         <button className="btn btn-dark  d-block" type="submit">Submit</button>
                                     </fieldset>  
                                     &nbsp;
-                                   
-
-                                    
-                                    
-                                   
-                                    
-                                    </div>
+                                 </div>
                                    
                                 </Form>
                             )

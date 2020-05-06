@@ -1,28 +1,75 @@
-import React from 'react'
+import React, { Component } from 'react';
+import AxiosFunctions from '../service/AxiosFunctions';
+import ListProjectsComponent from './ListProjectsComponent';
 
-export default function TaskTest(props) {
-    return (
-        <div>
-            {props.taskList.map(task => {
-                return (<div  className="card mb-4 shadow-sm " style={{ width: '16rem' }}>
+class TaskTest extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+      data:'',
+      results: []
+    }
+    console.log(this.state.data)
+  }
+
+  handle=(event)=>{
+
+    this.setState({
+     data:event.target.value
+    })
+  }
+
+  returnFun = (e) => {
+    e.preventDefault();
+    
+    AxiosFunctions.projectSearchByTitle(this.state.data)
+    .then(res => { 
+      const data = res.data;
+     
+       console.log(data);
+          
+       this.setState({
+        results: data
+       })
+
+       console.log("Pagauna");
+       console.log(data);
+       console.log("Pagauna2");
+
+       this.props.search(data);//Kaskas negerai cia?
+
+       console.log("Cia jau nepagauna");
+       console.log(data);
+       console.log("Cia jau nepagauna");   
+    }) 
+    console.log(this.state.data); 
+  }
+    render() {
+
+
+        return (
+          
             
-                <div className="card-header">
-                  <h4 className="my-0 font-weight-normal">{task.taskTitle}</h4>
-                </div>
-                <div className="card-body">
-                  <ul className="list-unstyled mt-3 mb-4">
-                    {/* <li>Description:{taskDescription}</li>
-                    <li>Priority:{taskPriority}</li>
-                    <li>Was Created:{createdAtDate}</li>
-                    <li>Last Updated:{updatedAtDate}</li>   */}
-                  </ul>
-                  <h4>Move to:</h4>
-                  
-                  <button type="button" className="btn btn-lg btn-block btn-primary">In Progress</button>
-                  <button type="button" className="btn btn-lg btn-block btn-primary">Done</button>
-                </div>
-              </div>)
-            })}
-        </div>
-    )
+<div className="row">
+
+    <div className=" container d-flex justify-content-between">
+      
+      <form className="form-inline my-2 my-lg-0" onSubmit={this.returnFun}>
+      <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" 
+      onChange = {this.handle}/>
+
+      <button type="submit" 
+      className="btn btn-dark">Search</button>
+    </form>
+      
+      
+    </div>
+    </div>
+ 
+        )
+    }
 }
+export default TaskTest;
+
+
+
