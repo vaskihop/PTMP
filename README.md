@@ -1,7 +1,5 @@
-# Project Task Management Program ![12](https://user-images.githubusercontent.com/61806389/81318902-9d324400-9097-11ea-9018-dcf404dd0644.png)
-
-## Description 
-
+# Project Task Management Program
+![12](https://user-images.githubusercontent.com/61806389/81318902-9d324400-9097-11ea-9018-dcf404dd0644.png)
 
 
 ## Description
