@@ -101,32 +101,33 @@ public class ProjectTaskController {
 	//--------->search<---------
 	
 	@GetMapping("/projectSearch")
-//	@ApiOperation(value="Get tasks", notes="Returns registered tasks")
+	@ApiOperation(value="Project search", notes="Returns registered projects with particular title")
 	public List<Project> projectSearchByTitle(@RequestParam String title){
 		return projectService.findProjectsByTitle(title);
 	}
 	
 	@GetMapping("/{projectId}/taskSearch")
-//	@ApiOperation(value="Get tasks", notes="Returns registered tasks")
+	@ApiOperation(value="Task search", notes="Returns registered tasks with particular title or id")
 	public List<TaskEntity> taskSearchByIdOrTitle(@PathVariable Long projectId, @RequestParam String idOrTitle){
 		return taskService.findTaskByIdOrTitle(idOrTitle, projectId);
 	}
 	
 //	--------->csv<---------
 	
-	@GetMapping(value="/{projectId}/exportTasks", produces = "text/csv")
-	public void exportTasks(HttpServletResponse res, @PathVariable Long projectId) {
+	@GetMapping(value="/exportProjects", produces = "text/csv")
+	@ApiOperation(value="Project export", notes="Exports projects to CSV file")
+	public void exportProjects(HttpServletResponse res) {
 		try {
-			new ProjectTaskCSVWriter<TaskEntity>().writeProjectOrTaskToCSV(res.getWriter(), taskService.getTasks(projectId));
+			new ProjectTaskCSVWriter<Project>().writeProjectOrTaskToCSV(res.getWriter(), projectService.getProjects());
 		} catch (Exception e) {
 
 		}
 	}
-	
-	@GetMapping(value="/exportProjects", produces = "text/csv")
-	public void exportProjects(HttpServletResponse res) {
+	@GetMapping(value="/{projectId}/exportTasks", produces = "text/csv")
+	@ApiOperation(value="Task export", notes="Exports tasks to CSV file")
+	public void exportTasks(HttpServletResponse res, @PathVariable Long projectId) {
 		try {
-			new ProjectTaskCSVWriter<Project>().writeProjectOrTaskToCSV(res.getWriter(), projectService.getProjects());
+			new ProjectTaskCSVWriter<TaskEntity>().writeProjectOrTaskToCSV(res.getWriter(), taskService.getTasks(projectId));
 		} catch (Exception e) {
 
 		}
