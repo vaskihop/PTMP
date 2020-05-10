@@ -79,6 +79,20 @@ class AxiosFunctions {
         return axios.get(`http://localhost:8080/api/projects/${projectId}/taskSearch?idOrTitle=${idOrTitle}`)
     }
 
+//	--------->csv<---------
+
+
+exportProjects(){
+    return axios.get(`http://localhost:8080/api/projects/exportProjects`)
+}
+
+
+
+
+exportTasks(projectId){
+    return axios.get(`http://localhost:8080/api/projects/${projectId}/exportTasks`)
+}
+
 
 
 

@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import AxiosFunctions from '../service/AxiosFunctions';
+import { Dropdown } from 'react-bootstrap';
+
+
 
 
 
@@ -157,86 +160,154 @@ changeToDone = (projectId, taskId) => {
             this.refreshTasks(projectId);
         })
 }
+goBack=()=>{
+    this.props.history.push(`projects/${this.state.projectId}/tasks/`)
+}
+
+
     render() {
       const todo = this.state.taskList.filter(task => task.taskState === "TODO");
       const inprogress = this.state.taskList.filter(task => task.taskState === "INPROGRESS");
       const done = this.state.taskList.filter(task => task.taskState === "DONE");
       
     
-
+{/* <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Dropdown button
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="#">Action</a>
+    <a class="dropdown-item" href="#">Another action</a>
+    <a class="dropdown-item" href="#">Something else here</a>
+  </div>
+</div> */}
 
 
         return (  
 
             <div>
-                <div className="container-fluid">
+                <div className="container">
+                    
                     <div className="row justify-content-between d-flex flex-column flex-md-row align-items-center p-1 px-md-4 mb-3 bg-nav-color border-bottom shadow-sm header">
-                        <h3 className="col-lg-1 col-sm-1 mt-2 ml-5">Tasks </h3>
-                        <p className="col-lg-2 col-sm-3 mt-2 "><b>Project Id {this.state.projectId}</b></p>
-                        <a className="col-lg-2 col-sm-3 btn btn-outline-dark " href={'/projects/id/' + this.state.projectId + '/tasks/'}>Back To Tasks List</a>
+                        <h2 className="col-lg-4 col-sm-1 mt-2 ml-5">TASK BOARD</h2>
+                        <button className=" btn btn-dark" onClick={() => this.goBack(this.state.projectId)}>Go back</button>
                     </div>
-
                     <div className="row ">
-                        <div className="col-4">
-                            <h5>Not Started</h5>
+
+                        <div className="col-4 ">
+
+                            <h3 className="text-center"> TO DO</h3>
                             {todo.map((task) => (
-                                <div className={"card" + (task.taskPriority == "LOW" ? " bg-low" : task.taskPriority == "MEDIUM" ? " bg-medium" : " bg-high")}
-                                    style={{ width: "18rem" }} key={task.id}>
+                                <Dropdown>
+
+                                <div className={"card " + (task.taskPriority === "LOW" ? " bg-low" : task.taskPriority === "MEDIUM" ? " bg-medium" : " bg-high")}
+                                    style={{ width: "22rem" }} key={task.id}>
                                     <div className="card-body">
-                                        <p className="card-title"><b>{task.taskTitle}</b></p>
-                                  
-                                        <p className="card-text">{task.taskDescription}</p>
-                                     
-                                        <button
+                                                    <Dropdown.Toggle variant="dark" id="dropdown-basic">ID:
+                                                    {task.id}&nbsp;
+                                                    {task.taskTitle}
+                                                     </Dropdown.Toggle>
+                                                      <button
                                             onClick={() => this.changeToInProgress(this.state.projectId, task.id)}
-                                            className="btn btn-primary mr-2">In Progress</button>
-                                        <button
-                                            onClick={() => this.changeToDone(this.state.projectId, task.id)}
-                                            className="btn btn-primary mr-2">Done</button>
+                                            className="btn btn-dark mr-2">
+
+<svg className="bi bi-caret-right-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 011.659-.753l5.48 4.796a1 1 0 010 1.506z"/>
+</svg>
+
+                                            </button>
+  <Dropdown.Menu>
+  <Dropdown.Item href="#/action-1"><p className="card-text"><h5> Description:</h5> {task.taskDescription}</p></Dropdown.Item>
+    <Dropdown.Item href="#/action-2"><p className="card-text"><h5>Priority:</h5> {task.taskPriority}</p></Dropdown.Item>
+    <Dropdown.Item href="#/action-3"><p className="card-text"><h5>Last Updated:</h5> {task.updatedAtDate}</p>  </Dropdown.Item>
+  </Dropdown.Menu>
                                     </div>
                                 </div>
-                            ))}
+                                </Dropdown>  ))}
                         </div>
+          
                         <div className="col-4">
-                            <h5>In Progress</h5>
+                            <h3 className="text-center">IN PROGRESS</h3>
                             {inprogress.map((task) => (
-                                <div className={"card" + (task.taskPriority == "LOW" ? " bg-low" : task.taskPriority == "MEDIUM" ? " bg-medium" : " bg-high")}
-                                    style={{ width: "18rem" }} key={task.id}>
-                                    <div className="card-body">
-                                        <p className="card-title"><b>{task.taskTitle}</b></p>
-                                  
-                                        <p className="card-text">{task.taskDescription}</p>
-                                    
-                                        <button
-                                            className="btn btn-primary mr-2"
+                                <Dropdown>
+                                <div className={"card" + (task.taskPriority === "LOW" ? " bg-low" : task.taskPriority === "MEDIUM" ? " bg-medium" : " bg-high")}
+                                    style={{ width: "22rem" }} key={task.id}>
+                                    <div className="card-body text-center">
+                                    <button
+                                            className="btn btn-dark mr-0"
                                             onClick={() => this.changeToNotStarted(this.state.projectId, task.id)}
-                                        >Not Started</button>
-                                        <button
-                                            onClick={() => this.changeToDone(this.state.projectId, task.id)}
-                                            className="btn btn-primary mr-2">Done</button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="col-4">
-                            <h5>Done</h5>
-                            {done.map((task) => (
-                                <div className={"card" + (task.taskPriority == "LOW" ? " bg-low" : task.taskPriority == "MEDIUM" ? " bg-medium" : " bg-high")}
-                                    style={{ width: "18rem" }} key={task.id}>
-                                    <div className="card-body">
-                                        <p className="card-title"><b>{task.taskTitle}</b></p>
-                                 
-                                        <p className="card-text">{task.taskDescription}</p>
+                                        > <svg className="bi bi-caret-left-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 00-1.659-.753l-5.48 4.796a1 1 0 000 1.506z"/>
+                                      </svg>
+                                      </button>
+                                    <Dropdown.Toggle variant="dark" id="dropdown-basic">
+                                        
+                                   
+                                        
+                                        
+                                        ID:
+                                                    {task.id}&nbsp;
+                                                    {task.taskTitle}
+                                                     </Dropdown.Toggle>
+                                        
                                    
                                         <button
-                                            onClick={() => this.changeToInProgress(this.state.projectId, task.id)}
-                                            className="btn btn-primary mr-2">In Progress</button>
-                                        <button
-                                            onClick={() => this.changeToNotStarted(this.state.projectId, task.id)}
-                                            className="btn btn-primary">Not Started</button>
+                                            onClick={() => this.changeToDone(this.state.projectId, task.id)}
+                                            className="btn btn-dark mr-2">
+
+<svg className="bi bi-caret-right-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 011.659-.753l5.48 4.796a1 1 0 010 1.506z"/>
+</svg>
+
+                                            </button>
+                                        
+                                        
+                                       
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            <Dropdown.Menu>
+    <Dropdown.Item href="#/action-1"><p className="card-text"><h5> Description:</h5> {task.taskDescription}</p></Dropdown.Item>
+    <Dropdown.Item href="#/action-2"><p className="card-text"><h5>Priority:</h5> {task.taskPriority}</p></Dropdown.Item>
+    <Dropdown.Item href="#/action-3"><p className="card-text"><h5>Last Updated:</h5> {task.updatedAtDate}</p>  </Dropdown.Item>
+  </Dropdown.Menu>
                                     </div>
                                 </div>
-                            ))}
+                                </Dropdown>  ))}
+                        </div>
+                        <div className="col-4 ">
+                            <h3 className="text-center">DONE</h3>
+                            {done.map((task) => (
+                                <Dropdown>
+                                <div className={"card" + (task.taskPriority === "LOW" ? " bg-low" : task.taskPriority === "MEDIUM" ? " bg-medium" : " bg-high")}
+                                    style={{ width: "22rem" }} key={task.id}>
+                                    <div className="card-body text-right">
+                                    <button
+                                            className="btn btn-dark mr-0"
+                                            onClick={() => this.changeToInProgress(this.state.projectId, task.id)}
+                                        > <svg className="bi bi-caret-left-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 00-1.659-.753l-5.48 4.796a1 1 0 000 1.506z"/>
+                                      </svg>
+                                      </button>
+                                    <Dropdown.Toggle variant="dark" id="dropdown-basic">
+                                        
+                                   
+                                        
+                                        
+                                        ID:
+                                                    {task.id}&nbsp;
+                                                    {task.taskTitle}
+                                                     </Dropdown.Toggle>
+                                                     <Dropdown.Menu>
+                                                     <Dropdown.Item href="#/action-1"><p className="card-text"><h5> Description:</h5> {task.taskDescription}</p></Dropdown.Item>
+    <Dropdown.Item href="#/action-2"><p className="card-text"><h5>Priority:</h5> {task.taskPriority}</p></Dropdown.Item>
+    <Dropdown.Item href="#/action-3"><p className="card-text"><h5>Last Updated:</h5> {task.updatedAtDate}</p>  </Dropdown.Item>
+  </Dropdown.Menu>
+                                    </div>
+                                </div>
+                                </Dropdown>))}
                         </div>
 
                     </div>
@@ -259,72 +330,7 @@ changeToDone = (projectId, taskId) => {
 
 
 
-            // DOSIUDA
-//             <div className="container-fluid">            
-//                 <br/>             
-//                 <br/>
-//                 {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
-//                 <div className="container-fluid">
-//                 <div className="row">
-//                 &nbsp;&nbsp;&nbsp;&nbsp;
-//                          <a className="btn btn-dark" href="http://localhost:3000/" role="button">Go Back</a>
-//                          &nbsp;&nbsp;
-//                         <button className="btn btn-dark" onClick={() =>this.addTasksClicked(this.state.projectId, this.state.taskList.id)}>Add a New Task</button>
-//                         &nbsp;&nbsp;
-//                         <button className="btn btn-dark" onClick={() =>this.boardClicked(this.state.projectId)}>Board</button>
-                       
-//             <h3>&nbsp;&nbsp;&nbsp;Project Task List</h3>
-//                 </div>
-//                 <br/>
-//                     <table className="table">
-//                         <thead>
-//                             <tr>
-//                                 <th>Id</th>
-//                                 <th>Task Name</th>
-//                                 <th>Task Description</th>
-//                                 <th>Priority</th>
-//                                 <th>State</th>
-//                                 <th>Was Created</th>
-//                                 <th>Last Updated</th>
-//                                 <th>Update</th>
-//                                 <th>Delete</th>
-//                             </tr>
-//                         </thead>
-//                         <tbody>
-//                             {
-//                                 this.state.taskList.map(                
-//                                     task =>
-                                        
-//                                         <tr key={task.id}>
-//                                             <td>{task.id}</td>
-//                                             <td>{task.taskTitle}</td>
-//                                             <td>{task.taskDescription}</td>
-//                                             <td>{this.priority(task.taskPriority)}</td>  
-//                                             <td>{this.stateTask(task.taskState)}</td> 
-//                                             <td>{task.createdAtDate}<br/>{task.createdAtTime}</td> 
-//                                             <td>{task.updatedAtDate}<br/>{task.updatedAtTime}</td>   
-//                                             <td><button className="btn btn-dark" onClick={() => this.updateListClicked(this.state.projectId, task.id)}>Update Task</button></td>
-//                                             <td><button className="btn btn-dark" onClick={() => this.deleteListClicked(task.id,this.state.projectId)}>Delete Task</button></td>
-//                                         </tr>
-//                                 ) 
-//                             }
-//                         </tbody>
-//                     </table>
-//                 </div>  
-//       <div className="container">
-//   <div className="row">
-//     <div className="col-4">
-//     <TaskTest taskList = {todo} sabaka ={this.projectId} />
-//     </div>
-//     <div className="col-4">
-//     <TaskTest taskList = {inprogress} />
-//     </div>
-//     <div className="col-4">
-//        <TaskTest taskList = {done} />
-//     </div>
-//   </div>
-// </div>     
-//   </div>
+            
         )        
     }
 }

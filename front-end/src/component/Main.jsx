@@ -20,6 +20,7 @@ class Main extends Component {
                         <Route path="/projects/:id1/tasks/:id2" exact  component={ProjectItemsUpdate} />
                         <Route path="/projects/:id/tasks/projects/:id/tasks/" exact component={ProjectItems} />
                         <Route path="/projects/:id/tasks/projects/task/:id/tasks/" exact component={ProjectItems} />
+                        <Route path="/projects/:id/board/projects/:id/tasks/" exact component={ProjectItems} />
                         <Route path="/projects/:id/board/" exact component={TasksBoard} />
                         <Route path="/projects/serch/" exact component={SerchProject} />
                         

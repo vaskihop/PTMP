@@ -1,135 +1,81 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import AxiosFunctions from '../service/AxiosFunctions';
-import TaskTest from './TaskTest';
+
 
 class SerchProject extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            projects: [],
-            message:null
-        }
+  constructor(props){
+    super(props);
+    this.state={
+      data:'',
+      results: [],
+     // projectId : this.props.match.params.id
     }
+    // console.log(this.state.data)\
+    console.log("projectId")
+    console.log(props.projectId)
+    console.log("projectId")
+  }
 
-    componentDidMount() {
-        this.refreshProjects();
-    }
+  handle=(event)=>{
 
-    refreshProjects=()=> {
-        AxiosFunctions.retrieveAllProjects()
-            .then(
-                response => {
-                    this.setState({ projects: response.data })
-                }
-            )
-    }
-
-    deleteProjectClicked= (id)=> {
-        AxiosFunctions.deleteProject( id)
-            .then(
-                response => {
-                    this.setState({ message: `Project was deleted successfully` })
-                    this.refreshProjects()
-                }
-            )
-
-    }
-
-    showProjectItems=(id)=>{
-      
-    
-     this.props.history.push(`/projects/${id}/tasks`)
-    }
-  
-
-
-    addProjectClicked=()=> {
-        this.props.history.push(`/projects/new-project`)
-    }
-
-    updateProjectClicked=(id)=> {
-        this.props.history.push(`/projects/${id}`)
-    }
+    this.setState({
+     data:event.target.value
+    })
+  }
 
 
   
+  returnFun = (e) => {
+    e.preventDefault();
 
+    AxiosFunctions.taskSearchByIdOrTitle(this.props.projectId,this.state.data)
+    .then(res => { 
+      const data = res.data;
+     
+       console.log(data);
+          
+       this.setState({
+        results: data
+       })
+
+       console.log("Pagauna");
+       console.log(data);
+       console.log("Pagauna2");
+
+       this.props.search(data);//Kaskas negerai cia?
+
+       console.log("Cia jau nepagauna");
+       console.log(data);
+       console.log("Cia jau nepagauna");   
+    }) 
+    console.log(this.state.data); 
+  }
     render() {
+
+
         return (
-            <div className="container">
-                
-                <br/>
-                <div className="row">
-              
-                        <div className="col-8">
-                        <button className="btn btn-dark" onClick={this.addProjectClicked}>New Project</button> 
-                       
-                       <h3 className="d-inline pl-4">All Projects List</h3>
-                        </div>
-                        <div className="col-4">
-                            <TaskTest />
-                        </div>
-                                   
-                </div>
-                
-                
-                <br/>
-                {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
-                <div className="container">
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>SABAKA</th>
-                                <th>SABAKA Name</th>
-                                <th>SABAKA</th>
-                                <th>ProjecSABAKAt State</th>
-                                <th>SABAKA Tasks</th>
-                                <th>SABAKA Tasks</th>
-                                <th>SABAKA</th>
-                                <th>SABAKA</th>
-                            </tr>
-                        </thead>
-                        <tbody >
-                            {
-                                this.state.projects.map(
-                                   project =>
-                                        
-                                        <tr key={project.id}>
-                                            <td><button className="btn btn-dark" onClick={() => this.showProjectItems(project.id)}>Task List</button></td>
-                                            <td>{project.projectTitle}</td> 
-                                            <td>{project.projectDescription}</td>
-                                            <td className="text-center">{project.projectState ?
-                                            <svg className="bi bi-check" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path fillRule="evenodd" d="M13.854 3.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 11.708-.708L6.5 10.293l6.646-6.647a.5.5 0 01.708 0z" clipRule="evenodd"/>
-                                          </svg>
-                                             :
-                                             <svg className="bi bi-x" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path fillRule="evenodd" d="M11.854 4.146a.5.5 0 010 .708l-7 7a.5.5 0 01-.708-.708l7-7a.5.5 0 01.708 0z" clipRule="evenodd"/>
-  <path fillRule="evenodd" d="M4.146 4.146a.5.5 0 000 .708l7 7a.5.5 0 00.708-.708l-7-7a.5.5 0 00-.708 0z" clipRule="evenodd"/>
-</svg>
-                                             
-                                             
-                                             
-                                             
-                                             
-                                             
-                                             
-                                             }</td> 
-                                            <td className="text-center">{project.generalTaskNumber}</td>
-                                            <td className="text-center">{project.unfinishedTaskNumber}</td>
-                                            <td><button className="btn btn-dark" onClick={() => this.updateProjectClicked(project.id)}>Update</button></td>
-                                            <td><button className="btn btn-dark" onClick={() => this.deleteProjectClicked(project.id)}>Delete</button></td>
-                                        </tr>
-                                ) 
-                            }
-                        </tbody>
-                    </table>
-                  
-                </div>
-            </div>
+          
+            
+<div className="row">
+
+    <div className=" container d-flex justify-content-between">
+      
+      <form className="form-inline my-2 my-lg-0" onSubmit={this.returnFun}>
+      <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" 
+      onChange = {this.handle}/>
+
+      <button type="submit" 
+      className="btn btn-dark">Search</button>
+    </form>
+      
+      
+    </div>
+    </div>
+ 
         )
     }
 }
-
 export default SerchProject;
+
+
 

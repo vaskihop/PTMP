@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import AxiosFunctions from '../service/AxiosFunctions';
 import TaskTest from './TaskTest';
+import {CSVLink, CSVDownload} from 'react-csv';
 
 class ListProjectsComponent extends Component {
     constructor(props) {
@@ -23,6 +24,36 @@ class ListProjectsComponent extends Component {
                 }
             )
     }
+
+    downloadProjects(){
+     this.downloadProj();
+   
+    }
+    
+
+   
+
+    downloadProj=()=> {
+        AxiosFunctions.exportProjects()
+            .then(
+                response => {
+
+
+                    var csvData= response.data;
+                    console.log(csvData);
+
+                    var a =document.createElement("a");
+                    a.href='data:attachment/csv,' + csvData;
+                    a.target ="_Blank";
+                    a.download="Projects.csv";
+                    document.body.appendChild(a);
+                     a.click();
+ 
+                }
+            )
+    }
+
+
 
     deleteProjectClicked= (id)=> {
         AxiosFunctions.deleteProject( id)
@@ -68,13 +99,26 @@ class ListProjectsComponent extends Component {
                 <br/>
                 <div className="row">
               
-                        <div className="col-8">
+                        <div className="col-7">
                         <button className="btn btn-dark" onClick={this.addProjectClicked}>New Project</button> 
                        
                        <h3 className="d-inline pl-4">All Projects List</h3>
                         </div>
-                        <div className="col-4">
+                        <div className="col-5">
+                        <div className="row">
                             <TaskTest  search={this.search}  />
+                            &nbsp;&nbsp;
+                            <button className="btn btn-dark " onClick={() =>this.componentDidMount()}>Refresh</button> 
+                            &nbsp;&nbsp;
+                            <button className="btn btn-dark " onClick={() =>this.downloadProjects()}>
+                            <svg class="bi bi-cloud-download" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M4.887 5.2l-.964-.165A2.5 2.5 0 103.5 10H6v1H3.5a3.5 3.5 0 11.59-6.95 5.002 5.002 0 119.804 1.98A2.501 2.501 0 0113.5 11H10v-1h3.5a1.5 1.5 0 00.237-2.981L12.7 6.854l.216-1.028a4 4 0 10-7.843-1.587l-.185.96z"/>
+  <path fill-rule="evenodd" d="M5 12.5a.5.5 0 01.707 0L8 14.793l2.293-2.293a.5.5 0 11.707.707l-2.646 2.646a.5.5 0 01-.708 0L5 13.207a.5.5 0 010-.707z" clip-rule="evenodd"/>
+  <path fill-rule="evenodd" d="M8 6a.5.5 0 01.5.5v8a.5.5 0 01-1 0v-8A.5.5 0 018 6z" clip-rule="evenodd"/>
+</svg>
+                                </button> 
+                            
+                            </div> 
                         </div>
                                    
                 </div>
@@ -137,6 +181,7 @@ class ListProjectsComponent extends Component {
         )
     }
 }
+
 
 export default ListProjectsComponent;
 

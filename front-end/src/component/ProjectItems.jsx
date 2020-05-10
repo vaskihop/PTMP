@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import AxiosFunctions from '../service/AxiosFunctions';
+import SerchProject from './SerchProject';
 // import ListProjectsComponent from './ListProjectsComponent';
 // import Kanban from './Kanban';
-
+// SearchProject
 
 class ProjectItems extends Component {
     constructor(props) {
@@ -12,6 +13,9 @@ class ProjectItems extends Component {
             message:null,
             projectId : this.props.match.params.id
         }
+        // console.log("projectId")
+        // console.log(this.state.projectId)
+        // console.log("projectId")
 
     }
 
@@ -49,13 +53,13 @@ class ProjectItems extends Component {
 
     addTasksClicked=(projectId)=> {
 
-        console.log("Add task kliked ");
+       
         this.props.history.push(`/projects/${projectId}/tasks/new`);
      
     }
 
     updateListClicked=(projectId,taskId)=> {
-        console.log("update task kliked ");
+    
     this.props.history.push(`/projects/${projectId}/tasks/${taskId}`);
     
    
@@ -63,7 +67,7 @@ class ProjectItems extends Component {
 
 
     boardClicked=(projectId)=>{
-        console.log("board  kliked ");
+        
         this.props.history.push(`/projects/${projectId}/board/`);
     
 
@@ -72,10 +76,10 @@ class ProjectItems extends Component {
 
 
     stateTask(props) {
-        console.log(props)
+       
         
         if (props==="INPROGRESS") {
-            console.log("proshlo1")
+            
             return(<svg className="bi bi-battery-half" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path fillRule="evenodd" d="M12 5H2a1 1 0 00-1 1v4a1 1 0 001 1h10a1 1 0 001-1V6a1 1 0 00-1-1zM2 4a2 2 0 00-2 2v4a2 2 0 002 2h10a2 2 0 002-2V6a2 2 0 00-2-2H2z" clipRule="evenodd"/>
             <path d="M2 6h3v4H2V6zm12.5 3.5a1.5 1.5 0 000-3v3z"/>
@@ -121,6 +125,42 @@ class ProjectItems extends Component {
      </svg>)
 
    }
+   search = (taskList) => {
+  
+    console.log(taskList);
+    this.setState({taskList});
+
+}
+downloadList(){
+    console.log("Proshlo1");
+    this.downloadL(this.state.projectId);
+    console.log(this.state.projectId); 
+   }
+   
+
+  
+
+   downloadL=(value)=> {
+    console.log(value); 
+    console.log("Proshlo2");
+       AxiosFunctions.exportTasks(value)
+           .then(
+               response => {
+
+
+                console.log("Proshlo3");
+                   var csvData= response.data;
+                 
+                   var a =document.createElement("a");
+                   a.href='data:attachment/csv,' + csvData;
+                   a.target ="_Blank";
+                   a.download="ProjectTaskList.csv";
+                   document.body.appendChild(a);
+                    a.click();
+
+               }
+           )
+   }
 
 
     render() {
@@ -138,6 +178,7 @@ class ProjectItems extends Component {
                 {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
                 <div className="container-fluid">
                 <div className="row">
+                <div className="col-8">
                 &nbsp;&nbsp;&nbsp;&nbsp;
                          <a className="btn btn-dark" href="http://localhost:3000/" role="button">Go Back</a>
                          &nbsp;&nbsp;
@@ -145,7 +186,24 @@ class ProjectItems extends Component {
                         &nbsp;&nbsp;
                         <button className="btn btn-dark" onClick={() =>this.boardClicked(this.state.projectId)}>Board</button>
                        
-            <h3>&nbsp;&nbsp;&nbsp;Project Task List</h3>
+            <h3 className="d-inline pl-4">Project Task List</h3>
+            </div>
+            <div className="col-4">
+            <div className="row">
+                    <SerchProject  search={this.search} projectId={this.state.projectId}  />
+                    &nbsp;&nbsp;
+                    <button className="btn btn-dark " onClick={() =>this.componentDidMount()}>Refresh</button>  
+                    &nbsp;&nbsp;
+                    <button className="btn btn-dark " onClick={() =>this.downloadList()}>
+                        
+                    <svg class="bi bi-cloud-download" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M4.887 5.2l-.964-.165A2.5 2.5 0 103.5 10H6v1H3.5a3.5 3.5 0 11.59-6.95 5.002 5.002 0 119.804 1.98A2.501 2.501 0 0113.5 11H10v-1h3.5a1.5 1.5 0 00.237-2.981L12.7 6.854l.216-1.028a4 4 0 10-7.843-1.587l-.185.96z"/>
+  <path fill-rule="evenodd" d="M5 12.5a.5.5 0 01.707 0L8 14.793l2.293-2.293a.5.5 0 11.707.707l-2.646 2.646a.5.5 0 01-.708 0L5 13.207a.5.5 0 010-.707z" clip-rule="evenodd"/>
+  <path fill-rule="evenodd" d="M8 6a.5.5 0 01.5.5v8a.5.5 0 01-1 0v-8A.5.5 0 018 6z" clip-rule="evenodd"/>
+</svg>
+                        </button> 
+                    </div>  
+                        </div>
                 </div>
                 <br/>
 
