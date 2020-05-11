@@ -27,7 +27,7 @@
  - `git clone https://github.com/vaskihop/PTMP.git`
  #### Staring backend application
  ```bash
-cd PTMP/front-end
+cd PTMP/back-end
 mvn install
 mvn spring-boot:run
 ```
