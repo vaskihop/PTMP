@@ -12,7 +12,7 @@ public class ProjectTaskCSVWriter<T> {
 	
 	public void writeProjectOrTaskToCSV(PrintWriter writer, List<T> tasks) throws CsvException {
 		 StatefulBeanToCsv<T> taskCSV = new StatefulBeanToCsvBuilder<T>(writer)
-	                .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
+	                .withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER)
 	                .withSeparator(CSVWriter.DEFAULT_SEPARATOR)
 	                .withOrderedResults(false)
 	                .build();
