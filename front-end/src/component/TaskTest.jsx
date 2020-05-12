@@ -32,17 +32,33 @@ class TaskTest extends Component {
         results: data
        })
 
-       console.log("Pagauna");
-       console.log(data);
-       console.log("Pagauna2");
+       
 
-       this.props.search(data);//Kaskas negerai cia?
+       this.props.search(data);
 
-       console.log("Cia jau nepagauna");
-       console.log(data);
-       console.log("Cia jau nepagauna");   
+          
     }) 
-    console.log(this.state.data); 
+  
+
+    // "bootstrap": {
+    //   "version": "4.4.1",
+    //   "resolved": "https://registry.npmjs.org/bootstrap/-/bootstrap-4.4.1.tgz",
+    //   "integrity": "sha512-tbx5cHubwE6e2ZG7nqM3g/FZ5PQEDMWmMGNrCUBVRPHXTJaH7CBDdsLeu3eCh3B1tzAxTnAbtmrzvWEvT2NNEA=="
+    // },
+
+
+
+    // "react-csv": {
+    //   "version": "2.0.3",
+    //   "resolved": "https://registry.npmjs.org/react-csv/-/react-csv-2.0.3.tgz",
+    //   "integrity": "sha512-exyAdFLAxtuM4wNwLYrlKyPYLiJ7e0mv9tqPAd3kq+k1CiJFtznevR3yP0icv5q/y200w+lzNgi7TQn1Wrhu0w=="
+    // },
+
+
+
+
+
+
   }
     render() {
 
