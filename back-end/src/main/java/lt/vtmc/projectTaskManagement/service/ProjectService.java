@@ -2,10 +2,12 @@ package lt.vtmc.projectTaskManagement.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import lt.vtmc.projectTaskManagement.model.Project;
 
 public interface ProjectService {
-	List<Project> getProjects();
+	List<Project> getProjects(Pageable pageable);
 	
 	void addProject(Project project);
 	
@@ -15,6 +17,6 @@ public interface ProjectService {
 	
 	void updateProject(Long projectId, Project project);
 	
-	List<Project> findProjectsByTitle(String title);
+	List<Project> findProjectsByTitle(String title, Pageable pageable);
 
 }

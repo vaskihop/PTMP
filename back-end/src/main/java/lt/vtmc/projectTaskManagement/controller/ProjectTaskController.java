@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,8 +40,8 @@ public class ProjectTaskController {
 	
 	@GetMapping
 	@ApiOperation(value="Get projects", notes="Returns registered projects")
-	public List<Project> getProjects(){
-		return projectService.getProjects();
+	public List<Project> getProjects(Pageable pageable){
+		return projectService.getProjects(pageable);
 	}
 	
 	@GetMapping("/{projectId}")
@@ -71,8 +72,8 @@ public class ProjectTaskController {
 	
 	@GetMapping("/{projectId}/tasks")
 	@ApiOperation(value="Get tasks", notes="Returns registered tasks")
-	public List<TaskEntity> getTask(@PathVariable Long projectId){
-		return taskService.getTasks(projectId);
+	public List<TaskEntity> getTask(@PathVariable Long projectId, Pageable pageable){
+		return taskService.getTasks(projectId, pageable);
 	}
 	
 	@GetMapping("/{projectId}/tasks/{taskId}")
@@ -102,32 +103,32 @@ public class ProjectTaskController {
 	
 	@GetMapping("/projectSearch")
 	@ApiOperation(value="Project search", notes="Returns registered projects with particular title")
-	public List<Project> projectSearchByTitle(@RequestParam String title){
-		return projectService.findProjectsByTitle(title);
+	public List<Project> projectSearchByTitle(@RequestParam String title, Pageable pageable){
+		return projectService.findProjectsByTitle(title, pageable);
 	}
 	
 	@GetMapping("/{projectId}/taskSearch")
 	@ApiOperation(value="Task search", notes="Returns registered tasks with particular title or id")
-	public List<TaskEntity> taskSearchByIdOrTitle(@PathVariable Long projectId, @RequestParam String idOrTitle){
-		return taskService.findTaskByIdOrTitle(idOrTitle, projectId);
+	public List<TaskEntity> taskSearchByIdOrTitle(@PathVariable Long projectId, @RequestParam String idOrTitle, Pageable pageable){
+		return taskService.findTaskByIdOrTitle(idOrTitle, projectId, pageable);
 	}
 	
 //	--------->csv<---------
 	
 	@GetMapping(value="/exportProjects", produces = "text/csv")
 	@ApiOperation(value="Project export", notes="Exports projects to CSV file")
-	public void exportProjects(HttpServletResponse res) {
+	public void exportProjects(HttpServletResponse res, Pageable pageable) {
 		try {
-			new ProjectTaskCSVWriter<Project>().writeProjectOrTaskToCSV(res.getWriter(), projectService.getProjects());
+			new ProjectTaskCSVWriter<Project>().writeProjectOrTaskToCSV(res.getWriter(), projectService.getProjects(pageable));
 		} catch (Exception e) {
 
 		}
 	}
 	@GetMapping(value="/{projectId}/exportTasks", produces = "text/csv")
 	@ApiOperation(value="Task export", notes="Exports tasks to CSV file")
-	public void exportTasks(HttpServletResponse res, @PathVariable Long projectId) {
+	public void exportTasks(HttpServletResponse res, @PathVariable Long projectId, Pageable pageable) {
 		try {
-			new ProjectTaskCSVWriter<TaskEntity>().writeProjectOrTaskToCSV(res.getWriter(), taskService.getTasks(projectId));
+			new ProjectTaskCSVWriter<TaskEntity>().writeProjectOrTaskToCSV(res.getWriter(), taskService.getTasks(projectId, pageable));
 		} catch (Exception e) {
 
 		}

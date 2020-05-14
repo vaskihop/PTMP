@@ -3,6 +3,7 @@ package lt.vtmc.projectTaskManagement.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import lt.vtmc.projectTaskManagement.model.ProjectEntity;
@@ -21,10 +22,9 @@ public class TaskServiceImpl implements TaskService {
 	private TaskRepository taskRepo;
 
 	@Override
-	public List<TaskEntity> getTasks(Long projectId) {
-
-		return projectRepo.findById(projectId).orElse(null).getTaskList();
-		
+	public List<TaskEntity> getTasks(Long projectId, Pageable pageable) {
+		ProjectEntity projectFromDB=projectRepo.findById(projectId).orElse(null);
+		return (List<TaskEntity>)taskRepo.findAllByProject(projectFromDB, pageable);
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
-	public List<TaskEntity> findTaskByIdOrTitle(String idOrTitle, Long projectId) {
+	public List<TaskEntity> findTaskByIdOrTitle(String idOrTitle, Long projectId, Pageable pageable) {
 		ProjectEntity projectFromDB=projectRepo.findById(projectId).orElse(null);
 		Long id=0L;
 		try {
@@ -68,7 +68,7 @@ public class TaskServiceImpl implements TaskService {
 		} catch (NumberFormatException e) {
 		}
 		
-		return taskRepo.findAllTaskEntityByProjectAndIdOrProjectAndTaskTitleContainsIgnoreCase(projectFromDB, id, projectFromDB, idOrTitle);
+		return taskRepo.findAllTaskEntityByProjectAndIdOrProjectAndTaskTitleContainsIgnoreCase(projectFromDB, id, projectFromDB, idOrTitle, pageable);
 	}
 
 }

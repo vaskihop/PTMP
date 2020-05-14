@@ -44,6 +44,9 @@ public class ProjectTaskManagementApplication {
 	@Bean
 	public CommandLineRunner demo(ProjectRepository projectRepo, TaskRepository taskRepo) {
 		return (args)->{
+			for (int i = 0; i < 20; i++) {
+				
+			
 			ProjectEntity induPlovimas=new ProjectEntity("Indu plovimas", "Isplauti visus indus");
 			TaskEntity saukstelioPlovimas=new TaskEntity("Saukstelio plovimas", "Nuplauti sauksteli", Priority.LOW, State.DONE, induPlovimas);
 			TaskEntity puodelioPlovimas= new TaskEntity("Puodelio plovimas", "Isplauti puodeli", Priority.MEDIUM, State.DONE, induPlovimas);
@@ -53,11 +56,24 @@ public class ProjectTaskManagementApplication {
 			induPlovimas.getTaskList().add(saukstelioPlovimas);
 			induPlovimas.getTaskList().add(saukstoPlovimas);
 			induPlovimas.getTaskList().add(puodelioPlovimas);
-			projectRepo.save(induPlovimas);
+			TaskEntity saukstelioPlovimas1=new TaskEntity("Saukstelio plovimas", "Nuplauti sauksteli", Priority.LOW, State.DONE, induPlovimas);
+			TaskEntity puodelioPlovimas1= new TaskEntity("Puodelio plovimas", "Isplauti puodeli", Priority.MEDIUM, State.DONE, induPlovimas);
+			TaskEntity saukstoPlovimas1= new TaskEntity("Sauksto plovimas", "Nuplauti sauksta", Priority.MEDIUM, State.INPROGRESS, induPlovimas);
+			TaskEntity dubensPlovimas1= new TaskEntity("Dubens plovimas", "Isplauti dubeni", Priority.HIGH, State.TODO, induPlovimas);
+			induPlovimas.getTaskList().add(dubensPlovimas1);
+			induPlovimas.getTaskList().add(saukstelioPlovimas1);
+			induPlovimas.getTaskList().add(saukstoPlovimas1);
+			induPlovimas.getTaskList().add(puodelioPlovimas1);
+			
+				projectRepo.save(induPlovimas);
+			
+			
 			taskRepo.save(saukstelioPlovimas);
 			taskRepo.save(saukstoPlovimas);
 			taskRepo.save(dubensPlovimas);
 			taskRepo.save(puodelioPlovimas);
+			
+			
 			
 			ProjectEntity vakariene=new ProjectEntity("Vakariene", "Pasigaminti vakariene");
 			TaskEntity sriuba=new TaskEntity("Sriubos virimas", "Sudeti bet ka i puoda, ipilti vandens", Priority.MEDIUM, State.DONE, vakariene);
@@ -66,10 +82,14 @@ public class ProjectTaskManagementApplication {
 			vakariene.getTaskList().add(sriuba);
 			vakariene.getTaskList().add(sriubosGelbejimas);
 			vakariene.getTaskList().add(arbata);
-			projectRepo.save(vakariene);
+			
+				projectRepo.save(vakariene);
+			
+			
 			taskRepo.save(sriuba);
 			taskRepo.save(sriubosGelbejimas);
 			taskRepo.save(arbata);
+			}
 
 		};
 		
