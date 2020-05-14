@@ -44,6 +44,9 @@ public class ProjectTaskManagementApplication {
 	@Bean
 	public CommandLineRunner demo(ProjectRepository projectRepo, TaskRepository taskRepo) {
 		return (args)->{
+			for (int i = 0; i < 20; i++) {
+				
+			
 			ProjectEntity induPlovimas=new ProjectEntity("Indu plovimas", "Isplauti visus indus");
 			TaskEntity saukstelioPlovimas=new TaskEntity("Saukstelio plovimas", "Nuplauti sauksteli", Priority.LOW, State.DONE, induPlovimas);
 			TaskEntity puodelioPlovimas= new TaskEntity("Puodelio plovimas", "Isplauti puodeli", Priority.MEDIUM, State.DONE, induPlovimas);
@@ -53,7 +56,10 @@ public class ProjectTaskManagementApplication {
 			induPlovimas.getTaskList().add(saukstelioPlovimas);
 			induPlovimas.getTaskList().add(saukstoPlovimas);
 			induPlovimas.getTaskList().add(puodelioPlovimas);
-			projectRepo.save(induPlovimas);
+			
+				projectRepo.save(induPlovimas);
+			
+			
 			taskRepo.save(saukstelioPlovimas);
 			taskRepo.save(saukstoPlovimas);
 			taskRepo.save(dubensPlovimas);
@@ -66,10 +72,14 @@ public class ProjectTaskManagementApplication {
 			vakariene.getTaskList().add(sriuba);
 			vakariene.getTaskList().add(sriubosGelbejimas);
 			vakariene.getTaskList().add(arbata);
-			projectRepo.save(vakariene);
+			
+				projectRepo.save(vakariene);
+			
+			
 			taskRepo.save(sriuba);
 			taskRepo.save(sriubosGelbejimas);
 			taskRepo.save(arbata);
+			}
 
 		};
 		

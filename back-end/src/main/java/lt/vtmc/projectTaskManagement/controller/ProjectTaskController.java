@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,8 +40,8 @@ public class ProjectTaskController {
 	
 	@GetMapping
 	@ApiOperation(value="Get projects", notes="Returns registered projects")
-	public List<Project> getProjects(){
-		return projectService.getProjects();
+	public List<Project> getProjects(Pageable pageable){
+		return projectService.getProjects(pageable);
 	}
 	
 	@GetMapping("/{projectId}")
@@ -102,8 +103,8 @@ public class ProjectTaskController {
 	
 	@GetMapping("/projectSearch")
 	@ApiOperation(value="Project search", notes="Returns registered projects with particular title")
-	public List<Project> projectSearchByTitle(@RequestParam String title){
-		return projectService.findProjectsByTitle(title);
+	public List<Project> projectSearchByTitle(@RequestParam String title, Pageable pageable){
+		return projectService.findProjectsByTitle(title, pageable);
 	}
 	
 	@GetMapping("/{projectId}/taskSearch")
@@ -116,9 +117,9 @@ public class ProjectTaskController {
 	
 	@GetMapping(value="/exportProjects", produces = "text/csv")
 	@ApiOperation(value="Project export", notes="Exports projects to CSV file")
-	public void exportProjects(HttpServletResponse res) {
+	public void exportProjects(HttpServletResponse res, Pageable pageable) {
 		try {
-			new ProjectTaskCSVWriter<Project>().writeProjectOrTaskToCSV(res.getWriter(), projectService.getProjects());
+			new ProjectTaskCSVWriter<Project>().writeProjectOrTaskToCSV(res.getWriter(), projectService.getProjects(pageable));
 		} catch (Exception e) {
 
 		}

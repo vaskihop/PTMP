@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import lt.vtmc.projectTaskManagement.model.Project;
@@ -17,10 +18,10 @@ public class ProjectServiceImpl implements ProjectService {
 	private ProjectRepository repo;
 
 	@Override
-	public List<Project> getProjects() {
+	public List<Project> getProjects(Pageable pageable) {
 		List<Project> projectList=new ArrayList<Project>();
 		
-		repo.findAll().forEach(projectEntity->projectList.add(new Project(projectEntity)));
+		repo.findAll(pageable).forEach(projectEntity->projectList.add(new Project(projectEntity)));
 		return projectList;
 	}
 
@@ -55,9 +56,9 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 	
 	@Override
-	public List<Project> findProjectsByTitle(String title) {
+	public List<Project> findProjectsByTitle(String title, Pageable pageable) {
 		List<Project> projectList=new ArrayList<Project>();
-		repo.findProjectEntityByProjectTitleContainsIgnoreCase(title).forEach(projectEntity->projectList.add(new Project(projectEntity)));
+		repo.findProjectEntityByProjectTitleContainsIgnoreCase(title, pageable).forEach(projectEntity->projectList.add(new Project(projectEntity)));
 		return projectList;
 	}
 
