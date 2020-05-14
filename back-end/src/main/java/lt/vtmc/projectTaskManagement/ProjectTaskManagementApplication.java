@@ -56,6 +56,14 @@ public class ProjectTaskManagementApplication {
 			induPlovimas.getTaskList().add(saukstelioPlovimas);
 			induPlovimas.getTaskList().add(saukstoPlovimas);
 			induPlovimas.getTaskList().add(puodelioPlovimas);
+			TaskEntity saukstelioPlovimas1=new TaskEntity("Saukstelio plovimas", "Nuplauti sauksteli", Priority.LOW, State.DONE, induPlovimas);
+			TaskEntity puodelioPlovimas1= new TaskEntity("Puodelio plovimas", "Isplauti puodeli", Priority.MEDIUM, State.DONE, induPlovimas);
+			TaskEntity saukstoPlovimas1= new TaskEntity("Sauksto plovimas", "Nuplauti sauksta", Priority.MEDIUM, State.INPROGRESS, induPlovimas);
+			TaskEntity dubensPlovimas1= new TaskEntity("Dubens plovimas", "Isplauti dubeni", Priority.HIGH, State.TODO, induPlovimas);
+			induPlovimas.getTaskList().add(dubensPlovimas1);
+			induPlovimas.getTaskList().add(saukstelioPlovimas1);
+			induPlovimas.getTaskList().add(saukstoPlovimas1);
+			induPlovimas.getTaskList().add(puodelioPlovimas1);
 			
 				projectRepo.save(induPlovimas);
 			
@@ -64,6 +72,8 @@ public class ProjectTaskManagementApplication {
 			taskRepo.save(saukstoPlovimas);
 			taskRepo.save(dubensPlovimas);
 			taskRepo.save(puodelioPlovimas);
+			
+			
 			
 			ProjectEntity vakariene=new ProjectEntity("Vakariene", "Pasigaminti vakariene");
 			TaskEntity sriuba=new TaskEntity("Sriubos virimas", "Sudeti bet ka i puoda, ipilti vandens", Priority.MEDIUM, State.DONE, vakariene);

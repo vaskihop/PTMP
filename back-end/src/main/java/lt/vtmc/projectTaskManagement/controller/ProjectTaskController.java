@@ -72,8 +72,8 @@ public class ProjectTaskController {
 	
 	@GetMapping("/{projectId}/tasks")
 	@ApiOperation(value="Get tasks", notes="Returns registered tasks")
-	public List<TaskEntity> getTask(@PathVariable Long projectId){
-		return taskService.getTasks(projectId);
+	public List<TaskEntity> getTask(@PathVariable Long projectId, Pageable pageable){
+		return taskService.getTasks(projectId, pageable);
 	}
 	
 	@GetMapping("/{projectId}/tasks/{taskId}")
@@ -109,8 +109,8 @@ public class ProjectTaskController {
 	
 	@GetMapping("/{projectId}/taskSearch")
 	@ApiOperation(value="Task search", notes="Returns registered tasks with particular title or id")
-	public List<TaskEntity> taskSearchByIdOrTitle(@PathVariable Long projectId, @RequestParam String idOrTitle){
-		return taskService.findTaskByIdOrTitle(idOrTitle, projectId);
+	public List<TaskEntity> taskSearchByIdOrTitle(@PathVariable Long projectId, @RequestParam String idOrTitle, Pageable pageable){
+		return taskService.findTaskByIdOrTitle(idOrTitle, projectId, pageable);
 	}
 	
 //	--------->csv<---------
@@ -126,9 +126,9 @@ public class ProjectTaskController {
 	}
 	@GetMapping(value="/{projectId}/exportTasks", produces = "text/csv")
 	@ApiOperation(value="Task export", notes="Exports tasks to CSV file")
-	public void exportTasks(HttpServletResponse res, @PathVariable Long projectId) {
+	public void exportTasks(HttpServletResponse res, @PathVariable Long projectId, Pageable pageable) {
 		try {
-			new ProjectTaskCSVWriter<TaskEntity>().writeProjectOrTaskToCSV(res.getWriter(), taskService.getTasks(projectId));
+			new ProjectTaskCSVWriter<TaskEntity>().writeProjectOrTaskToCSV(res.getWriter(), taskService.getTasks(projectId, pageable));
 		} catch (Exception e) {
 
 		}
