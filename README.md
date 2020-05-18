@@ -12,14 +12,18 @@
 
  ### Technologies 
  #### Backend 
- - Java 8
- - Spring
- - Spring-boot
- - JPA
- - H2
+ - Java 1.8
+ - Spring-boot 2.2.6
+ - H2-Database 1.4.200
+ - Maven 4.0.0
+ - OpenCSV 5.0
+ - Lombok 1.18.12
   #### UI
- - create-react-app
- - React
+ - Axios 0.19.2
+ - Formik 2.1.4
+ - React 16.13.1
+ - React-dom 16.13.1
+ - React-router-dom 5.1.2
   
  ### Installation Instructions
  >In command-line Clone this Project  with git command to your workspace:
