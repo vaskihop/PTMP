@@ -169,19 +169,6 @@ goBack=()=>{
       const todo = this.state.taskList.filter(task => task.taskState === "TODO");
       const inprogress = this.state.taskList.filter(task => task.taskState === "INPROGRESS");
       const done = this.state.taskList.filter(task => task.taskState === "DONE");
-      
-    
-{/* <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Dropdown button
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Action</a>
-    <a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>
-  </div>
-</div> */}
-
 
         return (  
 
@@ -203,7 +190,7 @@ goBack=()=>{
                                 <div className={"card " + (task.taskPriority === "LOW" ? " bg-low" : task.taskPriority === "MEDIUM" ? " bg-medium" : " bg-high")}
                                     style={{ width: "22rem" }} key={task.id}>
                                     <div className="card-body">
-                                                    <Dropdown.Toggle variant="dark" id="dropdown-basic">ID:
+                                                    <Dropdown.Toggle variant="dark" id="dropdown-basic" className="w-100">ID:
                                                     {task.id}&nbsp;
                                                     {task.taskTitle}
                                                      </Dropdown.Toggle>
@@ -216,7 +203,7 @@ goBack=()=>{
 </svg>
 
                                             </button>
-  <Dropdown.Menu>
+  <Dropdown.Menu className="w-100">
   <Dropdown.Item href="#/action-1"><p className="card-text"><h5> Description:</h5> {task.taskDescription}</p></Dropdown.Item>
     <Dropdown.Item href="#/action-2"><p className="card-text"><h5>Priority:</h5> {task.taskPriority}</p></Dropdown.Item>
     <Dropdown.Item href="#/action-3"><p className="card-text"><h5>Last Updated:</h5> {task.updatedAtDate}</p>  </Dropdown.Item>

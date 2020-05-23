@@ -1,0 +1,15 @@
+
+  .background {
+    background-image: url("../img/11.png");
+    
+    background-size: cover;
+    background-attachment: fixed;
+    background-position:center bottom;
+ }
+
+ .jumbotron{
+    height : 200px;
+}
+.jumbotrons{
+  height : 260px;
+}

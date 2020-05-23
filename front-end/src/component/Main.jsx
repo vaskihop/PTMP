@@ -6,6 +6,9 @@ import ProjectItems from './ProjectItems';
 import ProjectItemsUpdate from './ProjectItemsUpdate';
 import TasksBoard from './TasksBoard';
 import SerchProject from './SerchProject';
+import MainPage from '../bodycomponents/MainPage';
+import About from '../bodycomponents/About';
+import Contributors from '../bodycomponents/Contributors';
 
 class Main extends Component {
     render() {
@@ -13,7 +16,10 @@ class Main extends Component {
             <Router>
                 <>
                     <Switch>
-                        <Route path="/" exact component={ListProjectsComponent} />
+                        
+                        <Route path="/" exact component={MainPage} />
+                        <Route path="/about" component={About} />
+                        <Route path="/contibuters" component={Contributors} />
                         <Route path="/projects" exact component={ListProjectsComponent} />
                         <Route path="/projects/:id" exact component={ProjectComponent} />
                         <Route path="/projects/:id/tasks/" exact component={ProjectItems} />

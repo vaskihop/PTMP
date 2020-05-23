@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AxiosFunctions from '../service/AxiosFunctions';
+import Axios from 'axios';
 
 
 class SerchProject extends Component {
@@ -8,67 +8,54 @@ class SerchProject extends Component {
     this.state={
       data:'',
       results: [],
-     // projectId : this.props.match.params.id
+      projectId:props.pr,
+      currentPage:props.cur,
+      prepage:props.prep  
     }
-    // console.log(this.state.data)\
-    console.log("projectId")
-    console.log(props.projectId)
-    console.log("projectId")
   }
 
   handle=(event)=>{
-
     this.setState({
      data:event.target.value
     })
   }
-
-
   
+  // returnFun = (e) => {
+  //   e.preventDefault();
+  //   AxiosFunctions.taskSearchByIdOrTitle(this.props.projectId,this.state.data)
+  //   .then(res => { 
+  //     const data = res.data;          
+  //      this.setState({
+  //       results: data
+  //      })
+  //      this.props.search(data);
+  //   }) 
+  // }
   returnFun = (e) => {
     e.preventDefault();
-
-    AxiosFunctions.taskSearchByIdOrTitle(this.props.projectId,this.state.data)
-    .then(res => { 
-      const data = res.data;
-     
-       console.log(data);
-          
-       this.setState({
-        results: data
-       })
-
-       console.log("Pagauna");
-       console.log(data);
-       console.log("Pagauna2");
-
-       this.props.search(data);//Kaskas negerai cia?
-
-       console.log("Cia jau nepagauna");
-       console.log(data);
-       console.log("Cia jau nepagauna");   
-    }) 
-    console.log(this.state.data); 
-  }
-    render() {
-
-
-        return (
-          
+    // http://localhost:8080/api/projects/1/taskSearch?idOrTitle=sau&page=1&size=2
+      Axios.get("http://localhost:8080/api/projects/"+this.state.projectId+"/taskSearch?idOrTitle="+this.state.data+"&page="+this.state.currentPage+"&size="+this.state.prepage)
+        .then(res => { 
+          const data = res.data; 
+          console.log("Sitas")  
+          console.log(data)
+          console.log("Sitas")     
+           this.setState({
+             results: data
+            })
             
-<div className="row">
-
+         this.props.search(data); 
+      }) 
+    }
+    render() {
+        return (
+  <div className="row">
     <div className=" container d-flex justify-content-between">
-      
       <form className="form-inline my-2 my-lg-0" onSubmit={this.returnFun}>
-      <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" 
-      onChange = {this.handle}/>
+       <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" 
+         onChange = {this.handle}/>
 
-      <button type="submit" 
-      className="btn btn-dark">Search</button>
-    </form>
-      
-      
+    </form>   
     </div>
     </div>
  

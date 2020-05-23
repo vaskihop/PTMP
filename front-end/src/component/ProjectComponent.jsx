@@ -103,7 +103,7 @@ class ProjectComponent extends Component {
                                         <label className="font-weight-bold">Description:</label>
                                         <Field className="form-control" type="text" name="projectDescription" />
                                     </fieldset>                          
-                                    <a className="btn btn-dark" href="http://localhost:3000/" role="button">Go Back</a>&nbsp;&nbsp;
+                                    <a className="btn btn-dark" href="http://localhost:3000/projects" role="button">Go Back</a>&nbsp;&nbsp;
                                     <button className="btn btn-dark" type="submit">Save</button>                                 
                                 </Form>
                             )
