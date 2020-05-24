@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import AxiosFunctions from '../service/AxiosFunctions';
-// import axios from "axios";
+import img from '../img/22.jpg';
+
+
 
 class ProjectComponent extends Component {
     constructor(props) {
@@ -46,7 +48,7 @@ class ProjectComponent extends Component {
     }
     onSubmit=(values)=> {
         let project = {
-            // id: this.state.id,
+           
             projectTitle: values.projectTitle,
             projectDescription: values.projectDescription,
             projectState: values.projectState,
@@ -68,9 +70,31 @@ class ProjectComponent extends Component {
             ,projectState,generalTaskNumber,unfinishedTaskNumber
          } = this.state
         return (
-            <div>              
-                <div className="container">
+
+            <div className=""> 
+                     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-2 shadow">
+                        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">
+                            <a href="http://localhost:3000/" className="navbar-brand d-flex align-items-center text-nowrap">
+                        <svg className="bi bi-exclude" width="1em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fillRule="evenodd" d="M1.5 0A1.5 1.5 0 000 1.5v9A1.5 1.5 0 001.5 12H4v2.5A1.5 1.5 0 005.5 16h9a1.5 1.5 0 001.5-1.5v-9A1.5 1.5 0 0014.5 4H12V1.5A1.5 1.5 0 0010.5 0h-9zM12 4H5.5A1.5 1.5 0 004 5.5V12h6.5a1.5 1.5 0 001.5-1.5V4z" clipRule="evenodd"/>
+            </svg>
+        <strong>&nbsp;PTMP</strong>
+      </a>
+  </a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+            </button>
+                    <ul class="navbar-nav px-3">
+                <li class="nav-item text-nowrap">
+           
+        </li>
+    </ul>
+    
+</nav>          
+                <div className="container ">
                 <br/>
+                <div className="row ">
+                    <div class="col 6">
                 <h3>Please Add/Update Project Here</h3>
                 <br/>
                     <Formik
@@ -97,18 +121,23 @@ class ProjectComponent extends Component {
                                         className="alert alert-warning" />
                                     <fieldset className="form-group">
                                         <label className="font-weight-bold"> Project Name:</label>
-                                        <Field className="form-control" type="text" name="projectTitle"  />
+                                        <Field className="form-control" style={{width: 500}} type="text" name="projectTitle"  />
                                     </fieldset>                              
                                     <fieldset className="form-group">
                                         <label className="font-weight-bold">Description:</label>
-                                        <Field className="form-control" type="text" name="projectDescription" />
-                                    </fieldset>                          
+                                        <Field as="textarea" className="form-control" style={{width: 500}} type="text" name="projectDescription" />
+                                    </fieldset> 
                                     <a className="btn btn-dark" href="http://localhost:3000/projects" role="button">Go Back</a>&nbsp;&nbsp;
                                     <button className="btn btn-dark" type="submit">Save</button>                                 
                                 </Form>
+                                
                             )
                         }
                     </Formik>
+                    </div>
+                    <div class="col 6"></div>
+                    <img src={img} style={{width: 550, height: 300}}alt=""/>
+                    </div>
 
                 </div>
             </div>

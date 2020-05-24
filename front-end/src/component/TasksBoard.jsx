@@ -2,11 +2,6 @@ import React, { Component } from 'react'
 import AxiosFunctions from '../service/AxiosFunctions';
 import { Dropdown } from 'react-bootstrap';
 
-
-
-
-
-
 class TasksBoard extends Component {
     constructor(props) {
         super(props)
@@ -38,19 +33,19 @@ class TasksBoard extends Component {
             )
     }
     addTasksClicked=(projectId)=> {
-        console.log("Add task kliked ");
+
         this.props.history.push(`/projects/${projectId}/tasks/new`);    
     }
     updateListClicked=(projectId,taskId)=> {
-        console.log("update task kliked ");
+     
     this.props.history.push(`/projects/${projectId}/tasks/${taskId}`);  
     }
     boardClicked=(projectId)=>{
-        console.log("board  kliked ");
+    
         this.props.history.push(`/projects/${projectId}/board/`);
     }
     stateTask(props) {
-        console.log(props)     
+          
         if (props==="INPROGRESS") {
             console.log("proshlo1")
             return(<svg className="bi bi-battery-half" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -173,7 +168,28 @@ goBack=()=>{
         return (  
 
             <div>
+                  <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-2 shadow">
+                        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">
+                            <a href="http://localhost:3000/" className="navbar-brand d-flex align-items-center text-nowrap">
+                        <svg className="bi bi-exclude" width="1em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fillRule="evenodd" d="M1.5 0A1.5 1.5 0 000 1.5v9A1.5 1.5 0 001.5 12H4v2.5A1.5 1.5 0 005.5 16h9a1.5 1.5 0 001.5-1.5v-9A1.5 1.5 0 0014.5 4H12V1.5A1.5 1.5 0 0010.5 0h-9zM12 4H5.5A1.5 1.5 0 004 5.5V12h6.5a1.5 1.5 0 001.5-1.5V4z" clipRule="evenodd"/>
+            </svg>
+        <strong>&nbsp;PTMP</strong>
+      </a>
+  </a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+            </button>
+                    <ul class="navbar-nav px-3">
+                <li class="nav-item text-nowrap">
+          
+           
+        </li>
+    </ul>
+    
+</nav>
                 <div className="container">
+               
                     
                     <div className="row justify-content-between d-flex flex-column flex-md-row align-items-center p-1 px-md-4 mb-3 bg-nav-color border-bottom shadow-sm header">
                         <h2 className="col-lg-4 col-sm-1 mt-2 ml-5">TASK BOARD</h2>
@@ -184,25 +200,22 @@ goBack=()=>{
                         <div className="col-4 ">
 
                             <h3 className="text-center"> TO DO</h3>
-                            {todo.map((task) => (
+                            {todo.map((task) => (           
                                 <Dropdown>
-
                                 <div className={"card " + (task.taskPriority === "LOW" ? " bg-low" : task.taskPriority === "MEDIUM" ? " bg-medium" : " bg-high")}
                                     style={{ width: "22rem" }} key={task.id}>
-                                    <div className="card-body">
-                                                    <Dropdown.Toggle variant="dark" id="dropdown-basic" className="w-100">ID:
+                                    <div className="card-body">                                                   
+                                                    <Dropdown.Toggle variant="dark" id="dropdown-basic"className="w-100" >ID:
                                                     {task.id}&nbsp;
-                                                    {task.taskTitle}
+                                                    {task.taskTitle}                                    
                                                      </Dropdown.Toggle>
-                                                      <button
+                                                     <button
                                             onClick={() => this.changeToInProgress(this.state.projectId, task.id)}
-                                            className="btn btn-dark mr-2">
-
+                                            className="btn btn-dark mr-2 w-100">
 <svg className="bi bi-caret-right-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
   <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 011.659-.753l5.48 4.796a1 1 0 010 1.506z"/>
 </svg>
-
-                                            </button>
+                                            </button>                                                 
   <Dropdown.Menu className="w-100">
   <Dropdown.Item href="#/action-1"><p className="card-text"><h5> Description:</h5> {task.taskDescription}</p></Dropdown.Item>
     <Dropdown.Item href="#/action-2"><p className="card-text"><h5>Priority:</h5> {task.taskPriority}</p></Dropdown.Item>
@@ -211,51 +224,39 @@ goBack=()=>{
                                     </div>
                                 </div>
                                 </Dropdown>  ))}
-                        </div>
-          
+                        </div>    
                         <div className="col-4">
                             <h3 className="text-center">IN PROGRESS</h3>
                             {inprogress.map((task) => (
-                                <Dropdown>
+                                <Dropdown >
                                 <div className={"card" + (task.taskPriority === "LOW" ? " bg-low" : task.taskPriority === "MEDIUM" ? " bg-medium" : " bg-high")}
                                     style={{ width: "22rem" }} key={task.id}>
-                                    <div className="card-body text-center">
-                                    <button
-                                            className="btn btn-dark mr-0"
+                                    <div className="card-body ">
+                                   
+                                    <Dropdown.Toggle variant="dark" id="dropdown-basic"className="w-100">  
+                                        ID:
+                                                    {task.id}&nbsp;
+                                                    {task.taskTitle}
+                                                     </Dropdown.Toggle >
+                                                     <div className="">
+                                                     <button
+                                            className="btn btn-dark w-50"
                                             onClick={() => this.changeToNotStarted(this.state.projectId, task.id)}
                                         > <svg className="bi bi-caret-left-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 00-1.659-.753l-5.48 4.796a1 1 0 000 1.506z"/>
                                       </svg>
                                       </button>
-                                    <Dropdown.Toggle variant="dark" id="dropdown-basic">
-                                        
-                                   
-                                        
-                                        
-                                        ID:
-                                                    {task.id}&nbsp;
-                                                    {task.taskTitle}
-                                                     </Dropdown.Toggle>
-                                        
-                                   
                                         <button
                                             onClick={() => this.changeToDone(this.state.projectId, task.id)}
-                                            className="btn btn-dark mr-2">
+                                            className="btn btn-dark  w-50">
 
 <svg className="bi bi-caret-right-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
   <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 011.659-.753l5.48 4.796a1 1 0 010 1.506z"/>
 </svg>
 
                                             </button>
-                                        
-                                        
-                                       
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            <Dropdown.Menu>
+                                            </div>
+                                            <Dropdown.Menu className="w-100">
     <Dropdown.Item href="#/action-1"><p className="card-text"><h5> Description:</h5> {task.taskDescription}</p></Dropdown.Item>
     <Dropdown.Item href="#/action-2"><p className="card-text"><h5>Priority:</h5> {task.taskPriority}</p></Dropdown.Item>
     <Dropdown.Item href="#/action-3"><p className="card-text"><h5>Last Updated:</h5> {task.updatedAtDate}</p>  </Dropdown.Item>
@@ -271,14 +272,8 @@ goBack=()=>{
                                 <div className={"card" + (task.taskPriority === "LOW" ? " bg-low" : task.taskPriority === "MEDIUM" ? " bg-medium" : " bg-high")}
                                     style={{ width: "22rem" }} key={task.id}>
                                     <div className="card-body text-right">
-                                    <button
-                                            className="btn btn-dark mr-0"
-                                            onClick={() => this.changeToInProgress(this.state.projectId, task.id)}
-                                        > <svg className="bi bi-caret-left-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 00-1.659-.753l-5.48 4.796a1 1 0 000 1.506z"/>
-                                      </svg>
-                                      </button>
-                                    <Dropdown.Toggle variant="dark" id="dropdown-basic">
+                                   
+                                    <Dropdown.Toggle variant="dark" id="dropdown-basic" className=" w-100">
                                         
                                    
                                         
@@ -287,7 +282,14 @@ goBack=()=>{
                                                     {task.id}&nbsp;
                                                     {task.taskTitle}
                                                      </Dropdown.Toggle>
-                                                     <Dropdown.Menu>
+                                                     <button
+                                            className="btn btn-dark mr-0 w-100"
+                                            onClick={() => this.changeToInProgress(this.state.projectId, task.id)}
+                                        > <svg className="bi bi-caret-left-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 00-1.659-.753l-5.48 4.796a1 1 0 000 1.506z"/>
+                                      </svg>
+                                      </button>
+                                                     <Dropdown.Menu className="w-100">
                                                      <Dropdown.Item href="#/action-1"><p className="card-text"><h5> Description:</h5> {task.taskDescription}</p></Dropdown.Item>
     <Dropdown.Item href="#/action-2"><p className="card-text"><h5>Priority:</h5> {task.taskPriority}</p></Dropdown.Item>
     <Dropdown.Item href="#/action-3"><p className="card-text"><h5>Last Updated:</h5> {task.updatedAtDate}</p>  </Dropdown.Item>

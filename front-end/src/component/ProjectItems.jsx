@@ -3,6 +3,7 @@ import AxiosFunctions from '../service/AxiosFunctions';
 import SerchProject from './SerchProject';
 import img from '../img/33.png';
 import Axios from 'axios';
+import { Dropdown } from 'react-bootstrap';
 
 
 class ProjectItems extends Component {
@@ -12,21 +13,28 @@ class ProjectItems extends Component {
             taskList: [],
             message:null,
             projectId : this.props.match.params.id,
-            currentPage: 1,
-            prepage: 2
+            currentPage: 0,
+            prepage: 5,
+            showingPage:1,
+
+            
             
         }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
       
     }
 
     componentDidMount() {
-        this.refreshTasks(this.state.projectId,this.state.currentPage);
+        this.refreshTasks(this.state.projectId);
     }
 
-    refreshTasks=(projectId,currentPage)=> {
-        currentPage-=1;
+    refreshTasks=(projectId)=> {
+       
+        
         Axios.get(
-            "http://localhost:8080/api/projects/"+projectId+"/tasks?page="+currentPage+"&size="+this.state.prepage)
+       
+            "http://localhost:8080/api/projects/"+projectId+"/tasks?page="+this.state.currentPage+"&size="+this.state.prepage)
             .then(
                 response => {
                     this.setState({ taskList: response.data })
@@ -97,16 +105,16 @@ class ProjectItems extends Component {
      </svg>)
    }
    search = (taskList) => { 
-     console.log("PROSHLO")
-     console.log(taskList)
-     console.log("PROSHLO")
     this.setState({taskList});
 }
 downloadList(){
-    this.downloadL(this.state.projectId);
+    this.downloadProjAll(this.state.projectId);
+   }
+   downloadSingleList(){
+    this.downloadL();
    }
 
-downloadL=(value)=> {
+   downloadProjAll=(value)=> {
     AxiosFunctions.exportTasks(value)
         .then(
             response => {
@@ -120,31 +128,53 @@ downloadL=(value)=> {
             }
         )
 }
+
+downloadL=()=> {
+
+  // http://localhost:8080/api/projects/1/exportTasks?page=1&size=2
+  Axios.get("http://localhost:8080/api/projects/"+this.state.projectId+"/exportTasks?page="+this.state.currentPage+"&size="+this.state.prepage)   
+      .then(
+          response => {
+              var csvData= window.URL.createObjectURL(new Blob([response.data]));
+              var a =document.createElement("a");
+              a.href=csvData;
+              a.target ="_Blank";
+              a.download="ProjectTaskList.csv";
+              document.body.appendChild(a);
+              a.click();
+          }
+      )
+}
 nextPage(){
     this.state.currentPage += 1;
+    this.state.showingPage += 1;
     this.componentDidMount()
   
 }
 priviusPage(){
+  if( this.state.currentPage<1){
+    this.state.currentPage = 1;
+    this.state.showingPage = 1;
+  }
   this.state.currentPage -= 1;
+  this.state.showingPage -= 1;
     this.componentDidMount()
 }
-pagePressed(value){
-  this.state.currentPage=value;
+
+handleChange(event) {
+  this.state.currentPage=event.target.value;
+  this.state.showingPage=event.target.value;
   this.componentDidMount()
 }
-
-
-
-// Tasku paieskos puslapiavimas
-// http://localhost:8080/api/projects/1/taskSearch?idOrTitle=sau&page=1&size=2
-// Tasku eksportavimo puslapiavimas
-// http://localhost:8080/api/projects/1/exportTasks?page=1&size=2
-
-
-
-
-
+handleSubmit(event) {
+  alert('A name was submitted: ' + this.state.currentPage);
+  event.preventDefault();
+}
+viewPresed= (value) => {
+      
+  this.state.prepage=value;
+  this.componentDidMount()
+}
 
 
     render() {
@@ -195,16 +225,20 @@ pagePressed(value){
           <li class="nav-item">
             <a class="nav-link text-light"  onClick={() =>this.addTasksClicked(this.state.projectId, this.state.taskList.id)} href="#">
             &nbsp;&nbsp;&nbsp;
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
-              &nbsp;     New Task
+            <svg class="bi bi-pencil" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M11.293 1.293a1 1 0 0 1 1.414 0l2 2a1 1 0 0 1 0 1.414l-9 9a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391l9-9zM12 2l2 2-9 9-3 1 1-3 9-9z"/>
+  <path fill-rule="evenodd" d="M12.146 6.354l-2.5-2.5.708-.708 2.5 2.5-.707.708zM3 10v.5a.5.5 0 0 0 .5.5H4v.5a.5.5 0 0 0 .5.5H5v.5a.5.5 0 0 0 .5.5H6v-1.5a.5.5 0 0 0-.5-.5H5v-.5a.5.5 0 0 0-.5-.5H3z"/>
+</svg> &nbsp;     New Task
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-light" onClick={() =>this.boardClicked(this.state.projectId)} href="#">
               
             &nbsp;&nbsp;&nbsp;
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-              &nbsp;   Task Board
+            <svg class="bi bi-layout-text-window" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+  <path fill-rule="evenodd" d="M11 15V4h1v11h-1zm4.5-11H.5V3h15v1zM3 6.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+</svg>              &nbsp;   Task Board
               
             </a>
           </li>
@@ -216,10 +250,14 @@ pagePressed(value){
           </a>
         </h6>
           <li class="nav-item">
-            <a class="nav-link text-light" onClick={() =>this.downloadList()} href="#">
+            <a class="nav-link text-light" onClick={() =>this.downloadSingleList()} href="#">
               
             &nbsp;&nbsp;&nbsp;
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+            <svg class="bi bi-cloud-download" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M4.887 5.2l-.964-.165A2.5 2.5 0 1 0 3.5 10H6v1H3.5a3.5 3.5 0 1 1 .59-6.95 5.002 5.002 0 1 1 9.804 1.98A2.501 2.501 0 0 1 13.5 11H10v-1h3.5a1.5 1.5 0 0 0 .237-2.981L12.7 6.854l.216-1.028a4 4 0 1 0-7.843-1.587l-.185.96z"/>
+  <path fill-rule="evenodd" d="M5 12.5a.5.5 0 0 1 .707 0L8 14.793l2.293-2.293a.5.5 0 1 1 .707.707l-2.646 2.646a.5.5 0 0 1-.708 0L5 13.207a.5.5 0 0 1 0-.707z"/>
+  <path fill-rule="evenodd" d="M8 6a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0v-8A.5.5 0 0 1 8 6z"/>
+</svg>
               &nbsp;    Page Export 
               
             </a>
@@ -228,8 +266,11 @@ pagePressed(value){
             <a class="nav-link text-light" onClick={() =>this.downloadList()} href="#">
               
             &nbsp;&nbsp;&nbsp;
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-              &nbsp;    All Tasks Export
+            <svg class="bi bi-cloud-download" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M4.887 5.2l-.964-.165A2.5 2.5 0 1 0 3.5 10H6v1H3.5a3.5 3.5 0 1 1 .59-6.95 5.002 5.002 0 1 1 9.804 1.98A2.501 2.501 0 0 1 13.5 11H10v-1h3.5a1.5 1.5 0 0 0 .237-2.981L12.7 6.854l.216-1.028a4 4 0 1 0-7.843-1.587l-.185.96z"/>
+  <path fill-rule="evenodd" d="M5 12.5a.5.5 0 0 1 .707 0L8 14.793l2.293-2.293a.5.5 0 1 1 .707.707l-2.646 2.646a.5.5 0 0 1-.708 0L5 13.207a.5.5 0 0 1 0-.707z"/>
+  <path fill-rule="evenodd" d="M8 6a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0v-8A.5.5 0 0 1 8 6z"/>
+</svg>              &nbsp;    All Tasks Export
               
             </a>
           </li>
@@ -312,20 +353,36 @@ pagePressed(value){
                
                <nav aria-label="Page navigation example">
  <ul class="pagination">
+ <li class="page-item">
+ <Dropdown>
+  <Dropdown.Toggle variant="dark" id="dropdown-basic">
+  View More
+  </Dropdown.Toggle>
+
+  <Dropdown.Menu>
+    <Dropdown.Item  onClick={() =>this.viewPresed(5)} href="#/action-1">View 5 Tasks</Dropdown.Item>
+    <Dropdown.Item onClick={() =>this.viewPresed(10)} href="#/action-2">View 10 Tasks</Dropdown.Item>
+    <Dropdown.Item onClick={() =>this.viewPresed(15)} href="#/action-3">View 15 Tasks</Dropdown.Item>
+  </Dropdown.Menu>
+</Dropdown>
+   </li>
+   &nbsp;
    <li class="page-item">
    
      <button className="btn btn" onClick={() => this.priviusPage()}>&laquo;</button>
      &nbsp;
    </li>
-   <li class="page-item"><button className="btn btn" onClick={() => this.pagePressed(1)}>1</button></li>
-   &nbsp;
-   <li class="page-item"><button className="btn btn" onClick={() => this.pagePressed(2)}>2</button></li>
-   &nbsp;
-   <li class="page-item"><button className="btn btn" onClick={() => this.pagePressed(3)}>3</button></li>
-   &nbsp;
    <li class="page-item">
+
+   <form className="form" onSubmit={this.handleSubmit}>
+      <span class="glyphicon glyphicon-search"></span>
+        <input className="form-control mr-sm-2" value={this.state.showingPage} maxlength="3" style={{width: 60}} type="text"
+           onChange = {this.handleChange}/>
+      </form>
+   </li>
+   <li class="page-item">
+  
    <button className="btn btn" onClick={() => this.nextPage()}>&raquo;</button>
-    
    </li>
  </ul>
 </nav>

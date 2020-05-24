@@ -20,20 +20,10 @@ class SerchProject extends Component {
     })
   }
   
-  // returnFun = (e) => {
-  //   e.preventDefault();
-  //   AxiosFunctions.taskSearchByIdOrTitle(this.props.projectId,this.state.data)
-  //   .then(res => { 
-  //     const data = res.data;          
-  //      this.setState({
-  //       results: data
-  //      })
-  //      this.props.search(data);
-  //   }) 
-  // }
+
   returnFun = (e) => {
     e.preventDefault();
-    // http://localhost:8080/api/projects/1/taskSearch?idOrTitle=sau&page=1&size=2
+
       Axios.get("http://localhost:8080/api/projects/"+this.state.projectId+"/taskSearch?idOrTitle="+this.state.data+"&page="+this.state.currentPage+"&size="+this.state.prepage)
         .then(res => { 
           const data = res.data; 
