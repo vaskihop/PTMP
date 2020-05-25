@@ -6,9 +6,9 @@
  This is a Project Task Management Program where you can add new projects and control them, also you have a list of tasks as you can control them too. This Program similar to Jira. But you can use it as well as a home grocery list for your shopping. This PTMP easy to use. Our project still in the process we are trying our best to improve more functionality and nice-looking design.
  
  ### Example 
-![1](https://user-images.githubusercontent.com/61806389/81224537-88e73c00-8ff0-11ea-8fe4-eb6c1a4dc8bd.PNG)
+![1](https://user-images.githubusercontent.com/61806389/82799636-09c48580-9e83-11ea-9c1f-5474a20bc553.PNG)
 
-![2](https://user-images.githubusercontent.com/61806389/81224691-c6e46000-8ff0-11ea-9ca9-cc8ca4a1d8ea.PNG)
+![2](https://user-images.githubusercontent.com/61806389/82799693-1d6fec00-9e83-11ea-933c-84732449129c.PNG)
 
  ### Technologies 
  #### Backend 
