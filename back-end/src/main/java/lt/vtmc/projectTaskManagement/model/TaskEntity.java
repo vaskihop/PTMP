@@ -1,6 +1,5 @@
 package lt.vtmc.projectTaskManagement.model;
 
-
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -25,10 +24,12 @@ import lt.vtmc.projectTaskManagement.enums.Priority;
 import lt.vtmc.projectTaskManagement.enums.State;
 
 @Entity
-@Getter @Setter @NoArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 public class TaskEntity {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@CsvBindByName
 	private Long id;
 	@CsvBindByName
@@ -41,22 +42,22 @@ public class TaskEntity {
 	@CsvBindByName
 	@Enumerated(EnumType.STRING)
 	private State taskState;
-	
+
 	@CsvBindByName
 	@Temporal(TemporalType.DATE)
-	private Date createdAtDate;	
+	private Date createdAtDate;
 	@CsvBindByName
 	@Temporal(TemporalType.TIME)
 	private Date createdAtTime;
-	
+
 	@CsvBindByName
 	@Temporal(TemporalType.DATE)
-	private Date updatedAtDate;	
+	private Date updatedAtDate;
 	@CsvBindByName
 	@Temporal(TemporalType.TIME)
 	private Date updatedAtTime;
-	
-	@ManyToOne (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private ProjectEntity project;
 
@@ -69,23 +70,23 @@ public class TaskEntity {
 		this.taskState = taskState;
 		this.project = project;
 
-		this.createdAtDate=new Date();
-		this.createdAtTime=new Date();
-		this.updatedAtDate=new Date();
-		this.updatedAtTime=new Date();
+		this.createdAtDate = new Date();
+		this.createdAtTime = new Date();
+		this.updatedAtDate = new Date();
+		this.updatedAtTime = new Date();
 	}
-	
+
 	public TaskEntity(Task task, ProjectEntity project) {
 		super();
 		this.taskTitle = task.getTaskTitle();
 		this.taskDescription = task.getTaskDescription();
-		this.taskPriority = Priority.valueOf(task.getTaskPriority());
-		this.taskState = State.valueOf(task.getTaskState());
-		
-		this.createdAtDate=new Date();
-		this.createdAtTime=new Date();
-		this.updatedAtDate=new Date();
-		this.updatedAtTime=new Date();
+		this.taskPriority = task.getTaskPriority();
+		this.taskState = task.getTaskState();
+
+		this.createdAtDate = new Date();
+		this.createdAtTime = new Date();
+		this.updatedAtDate = new Date();
+		this.updatedAtTime = new Date();
 
 		this.project = project;
 	}
@@ -94,11 +95,11 @@ public class TaskEntity {
 
 		this.taskTitle = task.getTaskTitle();
 		this.taskDescription = task.getTaskDescription();
-		this.taskPriority = Priority.valueOf(task.getTaskPriority());
-		this.taskState = State.valueOf(task.getTaskState());
+		this.taskPriority = task.getTaskPriority();
+		this.taskState = task.getTaskState();
 
 		this.updatedAtDate = new Date();
-		this.updatedAtTime=new Date();
+		this.updatedAtTime = new Date();
 
 	}
 

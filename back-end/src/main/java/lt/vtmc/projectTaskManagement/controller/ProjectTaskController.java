@@ -3,6 +3,7 @@ package lt.vtmc.projectTaskManagement.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -52,7 +53,7 @@ public class ProjectTaskController {
 	
 	@PostMapping
 	@ApiOperation(value="Create projects", notes="Creates project")
-	public void addProject(@RequestBody Project project) {
+	public void addProject(@RequestBody @Valid Project project) {
 		projectService.addProject(project);
 	}
 	
@@ -84,7 +85,7 @@ public class ProjectTaskController {
 	
 	@PostMapping("/{projectId}/tasks")
 	@ApiOperation(value="Create task", notes="Creates task")
-	public void addTask(@RequestBody Task task, @PathVariable Long projectId) {
+	public void addTask(@RequestBody @Valid Task task, @PathVariable Long projectId) {
 		taskService.addTask(task, projectId);
 	}
 	@DeleteMapping("/{projectId}/tasks/{taskId}")
