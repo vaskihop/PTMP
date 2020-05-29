@@ -1,5 +1,7 @@
 package lt.vtmc.projectTaskManagement.model;
 
+import javax.validation.constraints.NotBlank;
+
 import com.opencsv.bean.CsvBindByName;
 
 import lombok.Getter;
@@ -12,8 +14,10 @@ public class Project {
 	@CsvBindByName
 	private Long id;
 	@CsvBindByName
+	@NotBlank
 	private String projectTitle;
 	@CsvBindByName
+	@NotBlank
 	private String projectDescription;
 	@CsvBindByName
 	private boolean projectState; 
